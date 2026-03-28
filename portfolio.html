@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jake Moore | Portfolio</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Jake Moore &middot; Professional Reputation &middot; Spring 2026 &middot; BCOM 314</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#evolution">Evolution</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="portfolio.html">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       5. PORTFOLIO — navy header, left-aligned
+       ══════════════════════════════════════════════ -->
+  <section class="portfolio-hero">
+    <div class="container">
+      <h1 class="hero-name">Work Samples</h1>
+      <p class="hero-tagline">Projects in statistical modeling, data analysis, and visualization. Each one built, written, and presented by me.</p>
+      <div class="hero-links mt-3">
+        <a class="btn-hero-primary" href="JakeMoore_Resume2026.pdf" target="_blank" rel="noopener">Download Résumé</a>
+        <a class="btn-hero-secondary" href="#library">View Samples ↓</a>
+      </div>
+      <div class="contact-social-links mt-3" style="justify-content: flex-start;">
+        <a class="social-link" href="https://www.linkedin.com/in/jake-moore74/" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn logo">
+          <span>LinkedIn</span>
+        </a>
+        <a class="social-link" href="https://github.com/Jahe-moore" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub logo">
+          <span>GitHub</span>
+        </a>
+        <a class="social-link" href="https://www.kaggle.com/jahe57" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kaggle/kaggle-original.svg" alt="Kaggle logo">
+          <span>Kaggle</span>
+        </a>
+        <a class="social-link" href="https://public.tableau.com/app/profile/jake.moore8327/vizzes" target="_blank" rel="noopener">
+          <i class="fa-solid fa-chart-bar" style="font-size:1.1rem; color:#E8762D;"></i>
+          <span>Tableau</span>
+        </a>
+        <a class="social-link" href="https://arizona.joinhandshake.com/profiles/jakemoore" target="_blank" rel="noopener">
+          <i class="fa-solid fa-handshake" style="font-size:1.1rem; color:#E8762D;"></i>
+          <span>Handshake</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Work samples — light gray background ── -->
+  <section id="library" class="section section-glass">
+    <div class="container">
+      <h2 class="section-heading mb-4">Evidence of How I Work</h2>
+
+      <div class="portfolio-samples-grid">
+
+        <!-- Sample 1 — Flight Delay Analysis (sole-authored, required) -->
+        <article class="doc-card">
+          <div class="doc-card__tags">
+            <span class="doc-card__tag">Analytics</span>
+            <span class="doc-card__tag">Solo</span>
+          </div>
+          <span class="doc-card__category">Statistical Modeling</span>
+          <h3 class="doc-card__title">Predicting Flight Delays: Logistic Regression</h3>
+          <p class="doc-card__summary">
+            Developed a binary logistic regression model to classify U.S. domestic flight arrival delays using over 1 million records from January–February 2024. Independently sourced and cleaned the dataset, engineered features, built and evaluated the model using confusion matrices and ROC-AUC in R, and produced a written analysis for a non-technical professional audience. This project demonstrates end-to-end analytical ownership: from raw data to actionable conclusion.
+          </p>
+          <ul class="doc-card__meta">
+            <li><strong>Skills:</strong> Logistic regression, feature engineering, model evaluation, data cleaning, technical writing</li>
+            <li><strong>Tools:</strong> R, tidyverse, ggplot2, caret</li>
+          </ul>
+          <div class="doc-card__actions">
+            <a class="btn btn-resume" href="Flight_Delay_Analysis.pdf" target="_blank" rel="noopener">Download PDF</a>
+            <a class="btn btn-resume" href="https://www.youtube.com/watch?v=DvZcNDcUFfU" target="_blank" rel="noopener">Watch on YouTube</a>
+          </div>
+        </article>
+
+        <!-- Sample 2 — Tableau Dashboard Portfolio -->
+        <article class="doc-card">
+          <div class="doc-card__tags">
+            <span class="doc-card__tag">Visualization</span>
+          </div>
+          <span class="doc-card__category">Data Visualization</span>
+          <h3 class="doc-card__title">Tableau Public Dashboard Portfolio</h3>
+          <p class="doc-card__summary">
+            A collection of published interactive dashboards exploring Taiwanese credit card payment behavior, U.S. graduate salary trends by state institution, cellphone form factor preferences, and wine market analytics. Each dashboard applies calculated fields, interactive parameters, and intentional visual hierarchy to make data accessible to non-technical audiences.
+          </p>
+          <ul class="doc-card__meta">
+            <li><strong>Skills:</strong> Dashboard design, calculated fields, interactive parameters, data storytelling, visual hierarchy</li>
+            <li><strong>Tools:</strong> Tableau Public, Excel</li>
+          </ul>
+          <div class="doc-card__actions">
+            <a class="btn btn-resume" href="https://public.tableau.com/app/profile/jake.moore8327/vizzes" target="_blank" rel="noopener">View Dashboards</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="container">
+      <span>© 2026 Jake Moore</span>
+      <span class="footer-sep">·</span>
+      <a href="index.html">Home</a>
+      <span class="footer-sep">·</span>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

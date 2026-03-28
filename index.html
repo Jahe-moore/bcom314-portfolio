@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jake Moore | Professional Persona</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Jake Moore &middot; Professional Reputation &middot; Spring 2026 &middot; BCOM 314</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#evolution">Evolution</a></li>
+          <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       1 + 2. BIO & RESUME — merged into one navy section
+       Three columns: headshot | bio text | resume card
+       ══════════════════════════════════════════════ -->
+  <section id="about" class="hero-section">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+
+        <!-- Headshot — far left, desktop only -->
+        <div class="col-lg-3 d-none d-lg-block">
+          <img src="headshot.png" alt="Jake Moore" class="hero-headshot">
+        </div>
+
+        <!-- Bio text — center column -->
+        <div class="col-lg-5">
+          <p class="hero-eyebrow">Business Analytics &amp; MIS · University of Arizona</p>
+          <h1 class="hero-name">Jake Moore</h1>
+          <p class="hero-tagline">Turning complexity into clear decisions and measurable results.</p>
+          <p class="hero-body">Hi, I'm Jake Moore — a junior at the University of Arizona's Eller College of Management, double-majoring in Business Analytics and Management Information Systems. I'm drawn to the intersection of business and technology: where analytical thinking, systems design, and clear communication come together to solve real problems. As a Technical Consultant at University IT Services, I've built the ability to translate technical work into outcomes that stakeholders can act on. I'm pursuing roles at the intersection of business strategy and technology, with graduation in May 2027.</p>
+          <div class="hero-links">
+            <a class="btn-hero-primary" href="https://www.linkedin.com/in/jake-moore74/" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn-hero-secondary" href="#video">Video</a>
+            <a class="btn-hero-secondary" href="portfolio.html">Portfolio</a>
+          </div>
+        </div>
+
+        <!-- Resume card — right column, anchored for nav -->
+        <div id="resume" class="col-lg-4">
+          <div class="hero-resume-card">
+            <p class="hero-resume-label">Hiring?</p>
+            <h2 class="hero-resume-heading">Let's work together.</h2>
+            <p class="hero-resume-body">I am actively seeking Business Intelligence Engineer and Data Analyst roles — graduating May 2027. If you are building a team that runs on data, I would love to connect.</p>
+            <a class="btn-hero-primary" href="JakeMoore_Resume2026.pdf" target="_blank" rel="noopener" style="display:block; text-align:center;">Download Resume</a>
+            <a class="btn-hero-secondary" href="https://www.linkedin.com/in/jake-moore74/" target="_blank" rel="noopener" style="display:block; margin-top: 0.2rem; text-align:center;">Connect on LinkedIn</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       3. VIDEOS — who I am + what I do, side by side
+       Background: light gray — sits directly below hero
+       ══════════════════════════════════════════════ -->
+  <section id="video" class="section section-light">
+    <div class="container">
+      <h2 class="section-heading">Who I Am and What I Do</h2>
+      <div class="site-grid-2 mt-1">
+
+        <!-- Card 1: Professional Persona Video -->
+        <div>
+          <div class="video-card">
+            <h3 class="video-card-heading">Professional Persona Video</h3>
+            <div class="ratio ratio-16x9" style="background: #1B2A4A; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                <p style="color: rgba(255,255,255,0.75); font-family: 'League Spartan', sans-serif; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 2rem; margin: 0;">Professional Persona Video — Coming Soon</p>
+              </div>
+            </div>
+            <p class="video-card-body">A 2–3 minute overview of my professional identity, value proposition, and target career direction — produced as part of BCOM 314 at the University of Arizona's Eller College of Management.</p>
+          </div>
+        </div>
+
+        <!-- Card 2: Flight Delay Analysis -->
+        <div>
+          <div class="video-card">
+            <h3 class="video-card-heading">Predicting Flight Delays: A Logistic Regression Approach</h3>
+            <div class="ratio ratio-16x9">
+              <iframe src="https://www.youtube.com/embed/DvZcNDcUFfU" title="Predicting Flight Delays: Logistic Regression" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="video-card-body">Applied logistic regression to over 1 million U.S. domestic flights from January–February 2024 to identify the strongest predictors of arrival delay. Built end-to-end in R — from data cleaning through model evaluation — and written for a non-technical professional audience.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       4. PROFESSIONAL PERSONA EVOLUTION
+       Background: charcoal — most important section
+       ══════════════════════════════════════════════ -->
+  <section id="evolution" class="section" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <h2 class="section-heading">Mirror vs. Window</h2>
+      <p style="font-family:'Libre Baskerville',Georgia,serif; font-size:0.975rem; color:var(--text-muted); line-height:1.7; margin-bottom:0;">Five dimensions examined — Self-Perception Inventory (SPI), Professional Reputation Survey (PRS), 360° peer evaluations, instructor feedback, and Charisma Diagnostic — to measure the gap between ideal and actual reputation across Core Values, Behavioral Communication, Team Culture, Growth Mindset, and Identity-Brand-Reputation Alignment.</p>
+
+      <!-- ── Layer 1: Identity | Gap Visualization | Reputation ── -->
+      <div class="evo-main-grid mt-3">
+
+        <!-- Left: Self-Perception (SPI) -->
+        <div class="evo-card">
+          <p class="evo-card-label">Self-Perception (SPI)</p>
+          <h3 class="evo-card-title">Ideal Reputation</h3>
+          <span class="evo-spi-badge">Analytical / Driver</span>
+          <div class="evo-stat-pair">
+            <div class="evo-stat">
+              <span class="evo-stat-num">0.0</span>
+              <span class="evo-stat-lab">Proactivity</span>
+            </div>
+            <div class="evo-stat">
+              <span class="evo-stat-num">−9.0</span>
+              <span class="evo-stat-lab">Reactivity</span>
+            </div>
+          </div>
+          <div class="evo-adj-row">
+            <span class="evo-adj">Driven</span>
+            <span class="evo-adj">Analytical</span>
+            <span class="evo-adj">Growth-Oriented</span>
+            <span class="evo-adj">Independent</span>
+            <span class="evo-adj">Pragmatic</span>
+          </div>
+          <p class="evo-mini-text">Direct, low-context, evidence-based communication. Builds credibility through task completion and measurable outcomes — not discussion. Prefers structured timelines, flat hierarchies, and accountability tied to results.</p>
+        </div>
+
+        <!-- Center: Gap Visualization -->
+        <div class="evo-gap-section">
+          <h3 class="evo-viz-heading">Where the Mirror Breaks</h3>
+          <p class="evo-viz-subhead">Peer-rated scores vs. team average — 360° evaluation, 3 rounds</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+            <div>
+              <span class="evo-panel-label">Competence — Quality of Work</span>
+              <div class="evo-metric-row">
+                <div class="evo-metric-label"><span>Round 1</span><span>81% vs 85.9%</span></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill" style="width:81%"></div></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill team-avg" style="width:85.9%"></div></div>
+              </div>
+              <div class="evo-metric-row">
+                <div class="evo-metric-label"><span>Round 2</span><span>85.8% vs 90.2%</span></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill" style="width:85.8%"></div></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill team-avg" style="width:90.2%"></div></div>
+              </div>
+              <div class="evo-metric-row">
+                <div class="evo-metric-label"><span>Round 3</span><span>60% vs 77.3%</span></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill evo-bar-gap" style="width:60%"></div></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill team-avg" style="width:77.3%"></div></div>
+              </div>
+            </div>
+            <div>
+              <span class="evo-panel-label">Dependability — Team Engagement /4</span>
+              <div class="evo-metric-row">
+                <div class="evo-metric-label"><span>Round 1</span><span>2.2 vs 3.3</span></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill evo-bar-gap" style="width:55%"></div></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill team-avg" style="width:82.5%"></div></div>
+              </div>
+              <div class="evo-metric-row">
+                <div class="evo-metric-label"><span>Round 2</span><span>2.25 vs 3.36</span></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill evo-bar-gap" style="width:56.3%"></div></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill team-avg" style="width:84%"></div></div>
+              </div>
+              <div class="evo-metric-row">
+                <div class="evo-metric-label"><span>Round 3</span><span>1.2 vs 2.57</span></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill evo-bar-gap" style="width:30%"></div></div>
+                <div class="evo-bar-track"><div class="evo-bar-fill team-avg" style="width:64.3%"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="evo-bar-legend" style="margin-top:0.75rem;">
+            <span class="jake-key">Jake</span>
+            <span class="team-key">Team Avg</span>
+          </div>
+        </div>
+
+        <!-- Right: Actual Reputation (PRS + 360°) -->
+        <div class="evo-card">
+          <p class="evo-card-label">Actual Reputation (PRS + 360°)</p>
+          <h3 class="evo-card-title">How Others Perceive Me</h3>
+          <div class="evo-adj-row">
+            <span class="evo-adj evo-adj-green">Driven</span>
+            <span class="evo-adj evo-adj-green">Disciplined</span>
+            <span class="evo-adj evo-adj-green">Silent Leader</span>
+            <span class="evo-adj evo-adj-amber">Quiet</span>
+            <span class="evo-adj evo-adj-amber">Disengaged</span>
+          </div>
+          <p class="evo-rep-inputs-label">Reputation Inputs — Individual</p>
+          <div class="evo-rep-inputs-grid">
+            <div class="evo-rep-input evo-rep-strong">
+              <span class="evo-rep-input-name">Competence</span>
+              <span class="evo-rep-input-val">Strong</span>
+            </div>
+            <div class="evo-rep-input evo-rep-strong">
+              <span class="evo-rep-input-name">Treatment of Others</span>
+              <span class="evo-rep-input-val">Strong</span>
+            </div>
+            <div class="evo-rep-input evo-rep-gap">
+              <span class="evo-rep-input-name">Dependability</span>
+              <span class="evo-rep-input-val">Gap</span>
+            </div>
+            <div class="evo-rep-input evo-rep-gap">
+              <span class="evo-rep-input-name">Professionalism</span>
+              <span class="evo-rep-input-val">Mixed</span>
+            </div>
+            <div class="evo-rep-input evo-rep-strong">
+              <span class="evo-rep-input-name">Conduct</span>
+              <span class="evo-rep-input-val">Strong</span>
+            </div>
+            <div class="evo-rep-input evo-rep-gap">
+              <span class="evo-rep-input-name">Creativity</span>
+              <span class="evo-rep-input-val">Low Visibility</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Divider: Five Required Dimensions ── -->
+      <div class="evo-subsec-divider mt-4">
+        <span>Five Required Dimensions — BCOM 314 Professional Persona Arc</span>
+      </div>
+
+      <!-- ── Layer 2: Five BCOM Subsections (3 + asymmetric 2) ── -->
+      <div class="evo-subsections-grid mt-2">
+
+        <!-- 1. Core Values Exploration -->
+        <div class="evo-sub-card">
+          <p class="evo-card-label">Core Values Exploration</p>
+          <h4 class="evo-sub-title">Identity Aligns. Leadership Label Does Not.</h4>
+          <p class="evo-sub-body">SPI: driven, hard-working, growth-oriented, analytical, pragmatic. PRS respondents describe a "Silent Leader" who earns credibility through action — a label I attribute to perfectionism and control, not leadership intent. Core values are aligned externally; the underlying process is not visible.</p>
+          <p class="evo-sub-gap"><strong>Gap: Small-to-Moderate.</strong> Others experience the outputs of my identity — not the reflective, growth-oriented process behind them. Drive and execution are recognized. Creativity and initiative in discussion are not.</p>
+        </div>
+
+        <!-- 2. Behavioral Communication Research -->
+        <div class="evo-sub-card">
+          <p class="evo-card-label">Behavioral Communication Research</p>
+          <h4 class="evo-sub-title">Competence Is Visible. Confidence Is Not.</h4>
+          <div class="evo-charisma-stats">
+            <div class="evo-charisma-stat">
+              <span class="evo-charisma-num evo-green">2.27</span>
+              <span class="evo-charisma-lab">Warmth Quotient</span>
+            </div>
+            <div class="evo-charisma-stat">
+              <span class="evo-charisma-num evo-amber">−2.27</span>
+              <span class="evo-charisma-lab">Confidence Quotient</span>
+            </div>
+          </div>
+          <p class="evo-sub-body">Charisma Diagnostic: Warmth Zone. "Warmth without confidence can lead others to perceive you as weak, ineffective." SPI composite: 0.0 Proactivity / −9.0 Reactivity. Analytical/Driver profile confirmed by PRS.</p>
+          <p class="evo-sub-gap"><strong>Gap: Moderate.</strong> Competence is evident in deliverables — rarely in real-time discussion. Mixed signals: peers see the output, not the thinking behind it.</p>
+        </div>
+
+        <!-- 3. Team Culture Findings -->
+        <div class="evo-sub-card">
+          <p class="evo-card-label">Team Culture Findings</p>
+          <h4 class="evo-sub-title">Strong Output. Low Presence.</h4>
+          <p class="evo-sub-body">"Jake did the bulk of our information assembly." — Round 2. "You do a great job with your part but it seems like you don't care about being part of the team." — Round 3. Meeting attendance: 2.4 → 2.25 → 2.0 out of 4. Positive team environment: 74 → 74.25 → 45.6 out of 100.</p>
+          <p class="evo-sub-gap"><strong>Gap: Large.</strong> Work-first culture (structured, output-centered) does not translate visibly into team engagement — the metric by which teammates assess contribution and build trust.</p>
+        </div>
+
+        <!-- 4. Growth Mindset -->
+        <div class="evo-sub-card">
+          <p class="evo-card-label">Growth Mindset</p>
+          <h4 class="evo-sub-title">Trajectory Is Real. Automaticity Is Not Yet.</h4>
+          <div class="evo-prof-arc">
+            <div class="evo-prof-step">
+              <span class="evo-prof-score">22.5/30</span>
+              <span class="evo-prof-lbl">Pres. 1<br>Low Meets</span>
+            </div>
+            <span class="evo-prof-arrow">→</span>
+            <div class="evo-prof-step">
+              <span class="evo-prof-score">33/40</span>
+              <span class="evo-prof-lbl">Pres. 2<br>Low Meets</span>
+            </div>
+            <span class="evo-prof-arrow">→</span>
+            <div class="evo-prof-step evo-prof-meets">
+              <span class="evo-prof-score">40/50</span>
+              <span class="evo-prof-lbl">Pres. 3<br>Meets ↑</span>
+            </div>
+          </div>
+          <p class="evo-sub-body">Posture, eye contact, and audience leadership measurably improved across all three presentations. Script dependency cited in every evaluation. Interview: 12.5/15 — delivery Meets Expectations; STAR method Low Meets.</p>
+          <p class="evo-sub-gap"><strong>Gap: Small-to-Moderate.</strong> "Awareness developed faster than automaticity." Change is real — it is not yet holding under live pressure.</p>
+        </div>
+
+        <!-- 5. Identity-Brand-Reputation Alignment (spans cols 2–3) -->
+        <div class="evo-sub-card">
+          <p class="evo-card-label">Identity – Brand – Reputation Alignment</p>
+          <h4 class="evo-sub-title">Independent Achiever → Reliable Team Contributor.</h4>
+          <p class="evo-sub-body">Radian brand analysis: "There is a significant discrepancy between this strong individual performance perception and his team collaboration skills. His identity needs to evolve from an independent achiever to a reliable, high-performing team contributor who leverages data to solve problems and fosters a positive collective environment." The desired brand — competent, analytical, dependable — is accurate. The legibility of that brand in team settings is not yet consistent.</p>
+          <div class="evo-outcomes-row">
+            <span class="evo-outcome-chip evo-outcome-green">Work With / Hire ↑</span>
+            <span class="evo-outcome-chip evo-outcome-green">Say Positive ↑</span>
+            <span class="evo-outcome-chip evo-outcome-amber">Rely On → Building</span>
+            <span class="evo-outcome-chip evo-outcome-amber">Trust → In Progress</span>
+            <span class="evo-outcome-chip evo-outcome-amber">Benefit of the Doubt → Earned Through Output</span>
+          </div>
+          <p class="evo-sub-gap"><strong>Strategy:</strong> Make thinking visible in real time. Speak from bullet points only. One substantive verbal contribution per meeting. The reputation outcomes I need — being relied on, trusted, hired — follow from presence, not just deliverables.</p>
+        </div>
+
+      </div>
+
+      <!-- ── Double-dot divider: required content above / extended analysis below ── -->
+      <div class="evo-extra-divider">
+        <hr class="evo-extra-divider-line">
+        <p class="evo-extra-label">Extended Analysis — Round-by-Round Data &amp; Strategic Insights</p>
+        <hr class="evo-extra-divider-line">
+      </div>
+
+      <!-- ── Layer 3: Three-Round Timeline ── -->
+      <div class="evo-timeline-grid">
+
+        <div class="evo-round-card">
+          <span class="evo-round-badge">Round 1 · Pres. 1: 22.5 / 30</span>
+          <div class="evo-round-scores">
+            <span class="evo-score-chip gap">Engagement 2.2 / 4</span>
+            <span class="evo-score-chip strong">Quality 81%</span>
+            <span class="evo-score-chip gap">Effort 75.2%</span>
+          </div>
+          <div class="evo-quote-block">
+            <p class="evo-quote-text">"I thought your slides were great and you did your part very well."</p>
+          </div>
+          <div class="evo-quote-block" style="margin-top:0.5rem;">
+            <p class="evo-quote-text">"Don't be afraid to speak up when we meet. Also try to respond to our group chat."</p>
+          </div>
+          <p class="evo-round-note">Prof: Low Meets · Script memorization flagged · Uptalk noted · Posture inconsistent</p>
+        </div>
+
+        <div class="evo-round-card">
+          <span class="evo-round-badge">Round 2 · Pres. 2: 33 / 40</span>
+          <div class="evo-round-scores">
+            <span class="evo-score-chip gap">Engagement 2.25 / 4</span>
+            <span class="evo-score-chip strong">Quality 85.8%</span>
+            <span class="evo-score-chip strong">Effort 81.3%</span>
+          </div>
+          <div class="evo-quote-block">
+            <p class="evo-quote-text">"Jake did the bulk of our information assembly. He put all the key information into an organized setup within our shared document."</p>
+          </div>
+          <div class="evo-quote-block" style="margin-top:0.5rem;">
+            <p class="evo-quote-text">"You put great work into slides, docs, etc. but rarely show up for group things."</p>
+          </div>
+          <p class="evo-round-note">Prof: Low Meets · Eye contact improved · Audience leadership noted · Script persists</p>
+        </div>
+
+        <div class="evo-round-card">
+          <span class="evo-round-badge">Round 3 · Pres. 3: 40 / 50</span>
+          <div class="evo-round-scores">
+            <span class="evo-score-chip gap">Engagement 1.2 / 4</span>
+            <span class="evo-score-chip gap">Quality 60%</span>
+            <span class="evo-score-chip gap">Effort 57.8%</span>
+          </div>
+          <div class="evo-quote-block">
+            <p class="evo-quote-text">"You do a great job with your part but it seems like you don't care about being part of the team."</p>
+          </div>
+          <div class="evo-quote-block" style="margin-top:0.5rem;">
+            <p class="evo-quote-text">"You still sound a bit robotic when presenting your content, and your voice still goes up at the end of each sentence."</p>
+          </div>
+          <p class="evo-round-note">Prof: <strong>Meets ↑</strong> · Posture steady · Eye contact excellent · Leading audience confirmed</p>
+        </div>
+
+      </div>
+
+      <!-- ── Layer 4: Insight Band ── -->
+      <div class="evo-insight-band mt-3">
+        <p class="evo-insight-text">"The gap is not about the quality of my work — it is about when and how that work becomes visible. My strongest Reputation Inputs (Competence, Treatment of Others, Conduct) are confirmed. My Dependability and Professionalism scores are inconsistent. The Reputation Outcomes I need — Work With/Hire, Rely On, Trust — follow from presence, not just deliverables. That is the gap I am actively closing."</p>
+        <div class="evo-timeline-grid" style="margin-top:1rem;">
+          <div>
+            <span class="evo-action-label">Delivery</span>
+            <p class="evo-action-text">Speak from bullet points — never a script. Cited in every professor evaluation. Confidence Quotient of −2.27 confirms: this is the skill that still needs automaticity.</p>
+          </div>
+          <div>
+            <span class="evo-action-label">Presence</span>
+            <p class="evo-action-text">One substantive verbal contribution per meeting. Engagement averaged 1.2 / 4 in Round 3 vs. team avg 2.57. Dependability as a Reputation Input is built through visible participation, not just completed tasks.</p>
+          </div>
+          <div>
+            <span class="evo-action-label">Impression Management</span>
+            <p class="evo-action-text">Make thinking visible in real time. Strong individual outputs do not automatically signal engagement. The professional credibility I want others to attribute begins with how I show up in the room — not only in what I deliver after it.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="container">
+      <span>© 2026 Jake Moore</span>
+      <span class="footer-sep">·</span>
+      <a href="portfolio.html">Portfolio</a>
+      <span class="footer-sep">·</span>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

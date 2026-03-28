@@ -1,0 +1,1677 @@
+/* ═══════════════════════════════════════════════
+   BCOM 314 — Professional Persona
+   Palette  : navy / charcoal / white / light gray / steel blue
+   Fonts    : League Spartan (headings) · Libre Baskerville (body)
+   Design   : flat, clean, left-aligned — no dynamic effects
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --navy:        #1B2A4A;   /* primary dark — nav, hero, footer    */
+  --navy-dark:   #0F1D36;   /* deeper navy for hover states         */
+  --charcoal:    #2D2D2D;   /* section background — evolution       */
+  --charcoal-mid:#3D3D3D;   /* slightly lighter for card surfaces   */
+  --steel:       #5B7FA6;   /* accent — links, labels, borders      */
+  --steel-light: #DDE8F2;   /* tinted bg for tags, hover fills      */
+  --white:       #FFFFFF;
+  --light-gray:  #ECEEF1;   /* visible alternating section bg       */
+  --border:      #D4D8DF;
+  --text:        #2D2D2D;   /* charcoal for all body text           */
+  --text-muted:  #6B7280;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'League Spartan', sans-serif;
+  color: var(--navy);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-top: 0;
+}
+
+a { color: var(--steel); text-decoration: none; }
+a:hover { color: var(--navy); text-decoration: underline; }
+
+img { display: block; max-width: 100%; }
+
+.container { max-width: 1400px; padding-inline: clamp(1rem, 2.5vw, 2rem); }
+
+/* ═══════════════════════════════════════════════
+   NAVBAR
+   ═══════════════════════════════════════════════ */
+.navbar {
+  background: var(--navy) !important;
+  border-bottom: 2px solid var(--navy-dark);
+  padding-block: 0.6rem;
+}
+
+.navbar-brand {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--white) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-link {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75) !important;
+  padding: 0.45rem 0.8rem !important;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--white) !important;
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════════
+   HERO — left-aligned, compact, navy background
+   ═══════════════════════════════════════════════ */
+.hero-section {
+  background: var(--navy);
+  padding-top: clamp(5.5rem, 12vw, 7rem);   /* clears fixed navbar */
+  padding-bottom: clamp(3rem, 7vw, 4.5rem);
+  padding-inline: 15px;
+}
+
+.hero-eyebrow {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  margin-bottom: 0.6rem;
+}
+
+.hero-name {
+  font-family: 'League Spartan', sans-serif;
+  font-size: clamp(2.4rem, 5.5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.hero-tagline {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.25rem;
+  max-width: 580px;
+  line-height: 1.55;
+}
+
+.hero-body {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.68);
+  max-width: 540px;
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.btn-hero-primary {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--steel);
+  color: var(--white);
+  padding: 0.65rem 1.6rem;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  display: inline-block;
+}
+
+.btn-hero-primary:hover {
+  background: #4a6d92;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.btn-hero-secondary {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0.65rem 1.6rem;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  display: inline-block;
+}
+
+.btn-hero-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: var(--white);
+  text-decoration: none;
+}
+
+/* Headshot: portrait, integrated with text block */
+.hero-headshot {
+  width: 260px;
+  max-width: 260px;
+  height: 260px;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  display: block;
+}
+
+/* Resume card — lives inside the navy hero section */
+.hero-resume-card {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 1.75rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.hero-resume-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  opacity: 0.75;
+  margin: 0;
+}
+
+.hero-resume-heading {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.25rem;
+  color: var(--white);
+  margin: 0;
+}
+
+.hero-resume-body {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+/* Legacy .headshot class (contact page) */
+.headshot {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  margin-bottom: 1.5rem;
+  display: block;
+  margin-inline: auto;
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION FOUNDATIONS
+   ═══════════════════════════════════════════════ */
+.section {
+  padding-block: clamp(2rem, 5vw, 3rem);
+  padding-inline: 15px;
+  background: var(--white);
+}
+
+/* Light gray — Resume, Portfolio library */
+.section-light {
+  background: var(--light-gray);
+}
+
+/* Charcoal — Evolution (most important section) */
+.section-dark {
+  background: var(--charcoal);
+}
+
+/* ── Section typography — light bg ── */
+.section-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 0.5rem;
+}
+
+.section-heading {
+  font-family: 'League Spartan', sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  color: var(--navy);
+  margin-bottom: 0.6rem;
+}
+
+.section-subhead {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.975rem;
+  color: var(--text-muted);
+  max-width: 620px;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ── Section typography — dark (charcoal) bg ── */
+.section-label-light {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  margin-bottom: 0.5rem;
+  opacity: 0.75;
+}
+
+.section-heading-light {
+  font-family: 'League Spartan', sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  color: var(--white);
+  margin-bottom: 0.6rem;
+}
+
+.section-subhead-light {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.975rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 620px;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ── Video cards — two equal columns ── */
+.video-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.video-card-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0;
+}
+
+.video-card-heading {
+  font-family: 'League Spartan', sans-serif;
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  color: var(--navy);
+  margin: 0 0 0.75rem;
+}
+
+.video-card .ratio {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.video-card-body {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   EVOLUTION SECTION — white background, palette colors only
+   Palette: navy · steel · steel-light · white · light-gray · border · text-muted
+   ═══════════════════════════════════════════════ */
+
+/* Layer 1 — Identity cards */
+.evo-card {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--steel);
+  border-radius: 5px;
+  padding: 1.4rem;
+  height: 100%;
+}
+
+.evo-card-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 0.3rem;
+}
+
+.evo-card-title {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 0.6rem;
+}
+
+.evo-spi-badge {
+  display: inline-block;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  background: var(--navy);
+  border-radius: 3px;
+  padding: 3px 10px;
+  margin-bottom: 0.75rem;
+}
+
+.evo-adj-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.evo-adj {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--navy);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.evo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.evo-list li {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.825rem;
+  color: var(--text);
+  line-height: 1.6;
+  padding: 0.45rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.evo-list li:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.evo-list li strong {
+  color: var(--navy);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+/* Layer 2 — Gap visualization */
+.evo-gap-section {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--navy);
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.evo-viz-heading {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 0.2rem;
+}
+
+.evo-viz-subhead {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.875rem;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+}
+
+.evo-panel-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.evo-metric-row { margin-bottom: 0.85rem; }
+
+.evo-metric-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.evo-bar-track {
+  height: 10px;
+  background: #C8CDD5;
+  border-radius: 4px;
+  margin-bottom: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.evo-bar-fill {
+  position: absolute;
+  left: 0; top: 0; height: 100%;
+  border-radius: 4px;
+  background: var(--steel);
+}
+
+.evo-bar-fill.team-avg {
+  background: rgba(27,42,74,0.5);
+}
+
+.evo-bar-legend {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.75rem;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  align-items: center;
+}
+
+.evo-bar-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.evo-bar-legend span::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 7px;
+  border-radius: 2px;
+}
+
+.evo-bar-legend .jake-key::before { background: var(--steel); }
+.evo-bar-legend .team-key::before { background: rgba(27,42,74,0.5); }
+
+/* Round timeline cards */
+.evo-round-card {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--steel);
+  border-radius: 4px;
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.evo-round-badge {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.evo-round-scores {
+  display: flex;
+  gap: 0.5rem;
+  margin-block: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.evo-score-chip {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.72rem;
+  color: var(--navy);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.evo-score-chip.gap { color: var(--text); }
+.evo-score-chip.strong { color: var(--steel); font-weight: 700; }
+
+.evo-quote-block {
+  border-left: 2px solid var(--steel);
+  padding-left: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.evo-quote-text {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.875rem;
+  color: var(--text);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Small professor note in round cards */
+.evo-round-note {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.72rem;
+  color: var(--text);
+  margin-top: 0.6rem;
+  letter-spacing: 0.04em;
+}
+
+/* Layer 4 — Insight banner */
+.evo-insight-band {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--steel);
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+.evo-insight-text {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.evo-action-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.evo-action-text {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.875rem;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════════
+   SITE-WIDE GRID UTILITIES
+   ═══════════════════════════════════════════════ */
+.site-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+@media (max-width: 767px) {
+  .site-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ── Evolution: main 3-col layout (Identity | Viz | Reputation) ── */
+.evo-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 991px) {
+  .evo-main-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Evolution: 5 BCOM subsections (3 + 2 asymmetric) ── */
+.evo-subsections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.evo-subsections-grid > :nth-child(5) {
+  grid-column: 2 / 4;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .evo-subsections-grid { grid-template-columns: 1fr 1fr; }
+  .evo-subsections-grid > :nth-child(5) { grid-column: 1 / 3; }
+}
+
+@media (max-width: 767px) {
+  .evo-subsections-grid { grid-template-columns: 1fr; }
+  .evo-subsections-grid > :nth-child(5) { grid-column: 1; }
+}
+
+/* ── Evolution: 3-col timeline ── */
+.evo-timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 767px) {
+  .evo-timeline-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Evolution: Subsection cards — uniform palette, no color coding ── */
+.evo-sub-card {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--steel);
+  border-radius: 5px;
+  padding: 1.2rem;
+  height: 100%;
+}
+
+/* Color variants resolved — all subsections share the same neutral style */
+.evo-sub-blue, .evo-sub-amber, .evo-sub-red, .evo-sub-green, .evo-sub-purple { }
+
+.evo-sub-title {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.9rem;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+
+.evo-sub-body {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.evo-sub-gap {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.875rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.evo-sub-gap strong {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+/* ── Stat callouts (SPI values) ── */
+.evo-stat-pair {
+  display: flex;
+  gap: 0.75rem;
+  margin-block: 0.6rem;
+}
+
+.evo-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.35rem 0.5rem;
+  flex: 1;
+}
+
+.evo-stat-num {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.1;
+}
+
+.evo-stat-lab {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-top: 2px;
+  text-align: center;
+}
+
+/* ── Charisma quotient display ── */
+.evo-charisma-stats {
+  display: flex;
+  gap: 1rem;
+  margin-block: 0.6rem;
+}
+
+.evo-charisma-stat { display: flex; flex-direction: column; flex: 1; }
+
+.evo-charisma-num {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--navy);
+}
+
+.evo-charisma-lab {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-top: 3px;
+}
+
+/* Charisma helpers — steel for positive signal, navy for notable gap */
+.evo-green { color: var(--steel); }
+.evo-amber { color: var(--navy); }
+
+/* ── Adjective chip variants — palette only ── */
+.evo-adj-green { background: var(--steel-light) !important; color: var(--steel) !important; border-color: rgba(91,127,166,0.4) !important; }
+.evo-adj-amber { background: var(--light-gray) !important; color: var(--navy) !important; border-color: var(--border) !important; }
+
+/* ── Gap bar — navy signals deficit vs. team avg ── */
+.evo-bar-fill.evo-bar-gap { background: var(--navy); }
+
+/* ── Reputation Inputs grid ── */
+.evo-rep-inputs-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin: 0.75rem 0 0.4rem;
+}
+
+.evo-rep-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.evo-rep-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 3px;
+  padding: 4px 7px;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.65rem;
+}
+
+.evo-rep-input-name { color: var(--text); }
+.evo-rep-input-val  { font-weight: 700; letter-spacing: 0.03em; }
+
+.evo-rep-strong { background: var(--steel-light); border: 1px solid rgba(91,127,166,0.35); }
+.evo-rep-strong .evo-rep-input-val { color: var(--steel); }
+.evo-rep-gap    { background: var(--white); border: 1px solid var(--border); }
+.evo-rep-gap .evo-rep-input-val    { color: var(--navy); }
+
+/* ── Professor presentation arc ── */
+.evo-prof-arc {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-block: 0.6rem;
+  flex-wrap: nowrap;
+}
+
+.evo-prof-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.evo-prof-score {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.1;
+}
+
+/* Meets — bold navy to distinguish from Low Meets */
+.evo-prof-meets .evo-prof-score { color: var(--navy); }
+
+.evo-prof-lbl {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-align: center;
+  margin-top: 2px;
+}
+
+.evo-prof-arrow {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* ── Reputation Outcomes row ── */
+.evo-outcomes-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-block: 0.6rem;
+}
+
+.evo-outcome-chip {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 3px 7px;
+  background: var(--steel-light);
+  color: var(--navy);
+  border: 1px solid rgba(91,127,166,0.35);
+}
+
+/* Color variants removed — uniform chip */
+.evo-outcome-green, .evo-outcome-amber { }
+
+/* ── Subsection divider (between required dimension blocks) ── */
+.evo-subsec-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.evo-subsec-divider::before,
+.evo-subsec-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Double-dot divider: required content above / extended analysis below ── */
+.evo-extra-divider { margin: 2.5rem 0 1.5rem; }
+
+.evo-extra-divider-line {
+  border: none;
+  border-top: 2px dotted var(--border);
+  margin: 0 0 4px;
+}
+
+.evo-extra-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--navy);
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+/* ── Mini body text in identity cards ── */
+.evo-mini-text {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.875rem;
+  color: var(--text);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Company logos on contact page ── */
+.company-logo {
+  height: 22px;
+  width: auto;
+  max-width: 110px;
+  object-fit: contain;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ── Portfolio samples grid ── */
+.portfolio-samples-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .portfolio-samples-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════
+   GLOBAL BUTTONS (light bg pages)
+   ═══════════════════════════════════════════════ */
+.btn-primary {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--navy);
+  color: var(--white);
+  padding: 0.65rem 1.6rem;
+  border-radius: 3px;
+  border: none;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: var(--navy-dark);
+  color: var(--white);
+  text-decoration: none;
+}
+
+/* Bootstrap override — .btn-resume used on portfolio/contact */
+.btn-resume {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--steel);
+  border: none;
+  color: var(--white);
+  padding: 0.6rem 1.4rem;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.btn-resume:hover {
+  background: var(--navy-dark);
+  color: var(--white);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════════
+   PORTFOLIO PAGE
+   ═══════════════════════════════════════════════ */
+.portfolio-hero {
+  background: var(--navy);
+  padding-top: clamp(5.5rem, 12vw, 7rem);
+  padding-bottom: clamp(3rem, 7vw, 4.5rem);
+  padding-inline: 15px;
+}
+
+.portfolio-hero h1 { color: var(--white); }
+.portfolio-hero .hero-tagline { color: rgba(255, 255, 255, 0.85); font-style: normal; }
+
+.portfolio-hero .lead {
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-family: 'Libre Baskerville', Georgia, serif;
+}
+
+.portfolio-kicker {
+  display: inline-block;
+  font-family: 'League Spartan', sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.6rem;
+}
+
+.section-glass { background: var(--light-gray); }
+
+.technical-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  color: var(--navy);
+}
+
+.max-w-720 { max-width: 720px; }
+
+/* Doc cards */
+.doc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.6rem 1.4rem 1.4rem;
+  border-radius: 5px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s ease;
+}
+
+.doc-card:hover { border-color: var(--steel); }
+
+.doc-card__tags {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: flex-end;
+}
+
+.doc-card__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 3px;
+  background: var(--steel-light);
+  border: 1px solid var(--border);
+  color: var(--navy);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.doc-card__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.doc-card__category {
+  font-family: 'League Spartan', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.doc-card__title {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.doc-card__summary {
+  color: var(--text);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.doc-card__meta {
+  margin: 0;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.doc-card__meta li::marker { color: var(--steel); }
+
+.doc-card__actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding-top: 0.35rem;
+}
+
+.doc-card__btn {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  color: var(--navy);
+  background: transparent;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.doc-card__btn:hover {
+  border-color: var(--navy);
+  background: var(--steel-light);
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.doc-card__actions .btn-resume {
+  flex: 1 1 auto;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════════
+   CONTACT PAGE
+   ═══════════════════════════════════════════════ */
+.contact-page {
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Libre Baskerville', Georgia, serif;
+}
+
+.contact-wrapper {
+  max-width: 1400px;
+  margin: clamp(5.5rem, 12vw, 7rem) auto 80px;
+  padding: 0 clamp(1rem, 2.5vw, 2rem) 40px;
+}
+
+.section-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 22px 26px;
+  margin-bottom: 18px;
+}
+
+.section-card h2 {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--steel);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-header h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.15rem;
+  color: var(--navy);
+}
+
+.contact-header-top {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.contact-headshot-wrap { flex-shrink: 0; }
+
+.contact-headshot {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.contact-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 3px;
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  color: var(--navy);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.social-link img { width: 15px; height: 15px; }
+
+.social-link:hover {
+  border-color: var(--steel);
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.contact-title {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.info-item {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 11px 13px;
+}
+
+.info-label {
+  display: block;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.67rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.info-value {
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  word-break: break-word;
+  font-size: 0.85rem;
+}
+
+.info-value:hover { color: var(--steel); text-decoration: none; }
+
+/* Contact header two-column layout */
+.contact-header-inner {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.contact-header-left {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Right side-by-side card pair */
+.contact-side-stack {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.contact-panel {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+
+/* Action card — right of the pair, slightly more prominent */
+.contact-panel--action {
+  width: 300px;
+  padding: 18px 20px;
+  border-color: rgba(91, 127, 166, 0.4);
+}
+
+/* Info card — left of the pair, quieter */
+.contact-panel--info {
+  width: 300px;
+  padding: 14px 16px;
+  border-color: rgba(91, 127, 166, 0.4);
+}
+
+.side-panel-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.67rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--steel);
+  margin: 0 0 4px;
+}
+
+.side-panel-heading {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 14px;
+  border: none;
+  padding: 0;
+  letter-spacing: -0.01em;
+}
+
+.side-panel-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.side-panel-btn {
+  display: block;
+  text-align: center;
+  padding: 7px 14px;
+  border-radius: 3px;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--navy);
+  color: var(--white);
+  border: 1px solid var(--navy);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.side-panel-btn:hover {
+  background: var(--steel);
+  border-color: var(--steel);
+  color: var(--white);
+  text-decoration: none;
+}
+
+.side-panel-btn--outline {
+  background: transparent;
+  color: var(--navy);
+}
+
+.side-panel-btn--outline:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.side-panel-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 11px;
+}
+
+.side-panel-detail:last-child { margin-bottom: 0; }
+
+.side-panel-detail-label {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.67rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.side-panel-detail-value {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.78rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.download-links { display: flex; flex-wrap: wrap; gap: 9px; }
+
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 3px;
+  border: 1px solid var(--navy);
+  color: var(--navy);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: transparent;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.download-link:hover {
+  background: var(--navy);
+  color: var(--white);
+  text-decoration: none;
+}
+
+/* Resume entries */
+.resume-entry + .resume-entry {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.resume-entry-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@media (min-width: 576px) {
+  .resume-entry-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}
+
+.resume-entry h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.975rem;
+  margin: 0;
+  color: var(--navy);
+}
+
+.resume-entry-dates {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.resume-entry-location {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 4px 0 8px;
+}
+
+.section-card ul { padding-left: 1.05rem; margin-bottom: 0; }
+
+.section-card li {
+  margin-bottom: 4px;
+  line-height: 1.65;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+/* Skills grid */
+.contact-skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  padding: 0;
+  grid-auto-rows: 1fr;
+}
+
+.skill-block {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-block h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--navy);
+  margin-bottom: 5px;
+}
+
+.skill-block p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.83rem;
+  line-height: 1.6;
+}
+
+.skill-icons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.5rem;
+}
+
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.skill-badge img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.skill-badge i {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════
+   MODALS
+   ═══════════════════════════════════════════════ */
+.modal-dark {
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.modal-dark .modal-header,
+.modal-dark .modal-footer { border-color: var(--border); }
+
+.modal-dark .modal-title {
+  font-family: 'League Spartan', sans-serif;
+  color: var(--navy);
+}
+
+.modal-dark iframe { border: none; border-radius: 3px; }
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════ */
+footer {
+  background: var(--charcoal);
+  padding: 1.25rem 15px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+footer .container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+footer a:hover {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.footer-sep { opacity: 0.3; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
+@media (max-width: 575.98px) {
+  .contact-header-inner { flex-direction: column; }
+  .contact-side-stack { flex: none; width: 100%; flex-direction: column; }
+  .contact-panel--action, .contact-panel--info { width: 100%; }
+  .contact-header-top { flex-direction: column; }
+  .contact-headshot { width: 100px; height: 100px; object-position: center 30%; border-radius: 50%; }
+  .contact-wrapper { margin-top: 75px; }
+  .section-card { padding: 16px; }
+  .download-links { flex-direction: column; }
+  .doc-card__tags { position: static; justify-content: flex-start; margin-bottom: 0.4rem; }
+  .doc-card__actions { flex-direction: column; }
+  .doc-card__actions .btn-resume { width: 100%; }
+}
+
+@media (max-width: 767.98px) {
+  .technical-header { flex-direction: column; gap: 1rem; text-align: center; }
+}
