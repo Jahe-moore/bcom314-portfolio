@@ -66,6 +66,14 @@ img { display: block; max-width: 100%; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;        /* allows flex to shrink the brand below its content width */
+  flex-shrink: 1;
+}
+
+.navbar-toggler {
+  padding: 0.2rem 0.5rem;
+  font-size: 1rem;
+  flex-shrink: 0;      /* toggler never shrinks — brand absorbs all compression */
 }
 
 .nav-link {
@@ -1690,7 +1698,7 @@ footer a:hover {
 }
 
 @media (max-width: 991.98px) {
-  .navbar-brand { max-width: calc(100% - 60px); }
+  .navbar-brand { font-size: 0.75rem; max-width: calc(100% - 56px); }
   .hero-section { padding-top: max(6.5rem, 12vw); }
   .hero-headshot { width: 140px; height: 140px; max-width: 140px; margin: 0 auto 0.5rem; }
   .btn-hero-primary,
