@@ -370,293 +370,147 @@ img { display: block; max-width: 100%; }
   margin: 0;
 }
 
-/* ═══════════════════════════════════════════════
-   EVOLUTION SECTION — white background, palette colors only
-   Palette: navy · steel · steel-light · white · light-gray · border · text-muted
-   ═══════════════════════════════════════════════ */
+/* =================================================
+   EVOLUTION ESSAY -- rubric-first text layout
+   ================================================= */
 
-/* Layer 1 — Identity cards */
-.evo-card {
-  background: var(--light-gray);
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--steel);
-  border-radius: 5px;
-  padding: 1.4rem;
-  height: 100%;
-}
-
-.evo-card-label {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--steel);
-  margin-bottom: 0.3rem;
-}
-
-.evo-card-title {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 1rem;
-  color: var(--navy);
-  margin-bottom: 0.6rem;
-}
-
-.evo-spi-badge {
-  display: inline-block;
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--white);
-  background: var(--navy);
-  border-radius: 3px;
-  padding: 3px 10px;
-  margin-bottom: 0.75rem;
-}
-
-.evo-adj-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 0.75rem;
-}
-
-.evo-adj {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--navy);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  padding: 3px 8px;
-  white-space: nowrap;
-}
-
-.evo-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.evo-list li {
+.evo-essay-lead {
   font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.825rem;
+  font-size: 1.05rem;
   color: var(--text);
-  line-height: 1.6;
-  padding: 0.45rem 0;
-  border-top: 1px solid var(--border);
+  line-height: 1.85;
+  margin-bottom: 2rem;
 }
 
-.evo-list li:first-child {
-  border-top: none;
-  padding-top: 0;
-}
-
-.evo-list li strong {
-  color: var(--navy);
+.evo-subsection-heading {
   font-family: 'League Spartan', sans-serif;
-  font-size: 0.72rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.evo-essay-body {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.975rem;
+  color: var(--text);
+  line-height: 1.85;
+  margin-bottom: 0;
+}
+
+.evo-measure-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 2.5rem;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 600px) {
+  .evo-measure-grid { grid-template-columns: 1fr; }
+}
+
+.evo-measure-item strong {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 0.1rem;
-}
-
-/* Layer 2 — Gap visualization */
-.evo-gap-section {
-  background: var(--light-gray);
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--navy);
-  border-radius: 5px;
-  padding: 1.5rem;
-}
-
-.evo-viz-heading {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 1rem;
   color: var(--navy);
+  display: block;
   margin-bottom: 0.2rem;
 }
 
-.evo-viz-subhead {
+.evo-measure-item p {
   font-family: 'Libre Baskerville', Georgia, serif;
   font-size: 0.875rem;
-  color: var(--text);
-  margin-bottom: 1.25rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0;
 }
 
-.evo-panel-label {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--steel);
-  margin-bottom: 0.75rem;
-  display: block;
+/* ── Evolution timeline ── */
+.evo-timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.evo-metric-row { margin-bottom: 0.85rem; }
-
-.evo-metric-label {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.75rem;
-  color: var(--text);
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
+@media (max-width: 768px) {
+  .evo-timeline-grid { grid-template-columns: 1fr; }
 }
 
-.evo-bar-track {
-  height: 10px;
-  background: #C8CDD5;
-  border-radius: 4px;
-  margin-bottom: 3px;
-  position: relative;
-  overflow: hidden;
-}
-
-.evo-bar-fill {
-  position: absolute;
-  left: 0; top: 0; height: 100%;
-  border-radius: 4px;
-  background: var(--steel);
-}
-
-.evo-bar-fill.team-avg {
-  background: rgba(27,42,74,0.5);
-}
-
-.evo-bar-legend {
-  display: flex;
-  gap: 1.25rem;
-  margin-top: 0.75rem;
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  color: var(--text);
-  align-items: center;
-}
-
-.evo-bar-legend span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.evo-bar-legend span::before {
-  content: '';
-  display: inline-block;
-  width: 12px;
-  height: 7px;
-  border-radius: 2px;
-}
-
-.evo-bar-legend .jake-key::before { background: var(--steel); }
-.evo-bar-legend .team-key::before { background: rgba(27,42,74,0.5); }
-
-/* Round timeline cards */
-.evo-round-card {
-  background: var(--light-gray);
+.evo-timeline-card {
+  background: #F8F9FB;
   border: 1px solid var(--border);
-  border-top: 3px solid var(--steel);
-  border-radius: 4px;
-  padding: 1.25rem;
-  height: 100%;
+  border-top: 3px solid #5B7FA6;
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem 1rem;
 }
 
-.evo-round-badge {
+.evo-timeline-card--final {
+  border-top-color: var(--navy);
+}
+
+.evo-timeline-stage {
   font-family: 'League Spartan', sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #5B7FA6;
   text-transform: uppercase;
-  color: var(--steel);
   display: block;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
-.evo-round-scores {
-  display: flex;
-  gap: 0.5rem;
-  margin-block: 0.6rem;
-  flex-wrap: wrap;
-}
-
-.evo-score-chip {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.72rem;
+.evo-timeline-card--final .evo-timeline-stage {
   color: var(--navy);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  padding: 3px 8px;
-  white-space: nowrap;
 }
 
-.evo-score-chip.gap { color: var(--text); }
-.evo-score-chip.strong { color: var(--steel); font-weight: 700; }
-
-.evo-quote-block {
-  border-left: 2px solid var(--steel);
-  padding-left: 0.75rem;
-  margin-top: 0.75rem;
-}
-
-.evo-quote-text {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.875rem;
-  color: var(--text);
-  line-height: 1.65;
-  margin: 0;
-}
-
-/* Small professor note in round cards */
-.evo-round-note {
+.evo-timeline-label {
   font-family: 'League Spartan', sans-serif;
-  font-size: 0.72rem;
-  color: var(--text);
-  margin-top: 0.6rem;
-  letter-spacing: 0.04em;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 0.75rem;
+  line-height: 1.35;
 }
 
-/* Layer 4 — Insight banner */
-.evo-insight-band {
-  background: var(--light-gray);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--steel);
-  border-radius: 4px;
-  padding: 1.5rem;
-}
-
-.evo-insight-text {
+.evo-timeline-strengths {
   font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 1rem;
+  font-size: 0.825rem;
   color: var(--text);
-  line-height: 1.8;
-  margin-bottom: 1.25rem;
+  line-height: 1.7;
+  margin: 0 0 0.75rem;
+  padding-left: 1.1rem;
 }
 
-.evo-action-label {
+.evo-timeline-growth {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 0.6rem;
+  line-height: 1.6;
+}
+
+.evo-growth-label {
   font-family: 'League Spartan', sans-serif;
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--steel);
-  margin-bottom: 0.3rem;
+  color: #5B7FA6;
   display: block;
+  margin-bottom: 0.2rem;
 }
 
-.evo-action-text {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.875rem;
-  color: var(--text);
-  margin: 0;
-  line-height: 1.65;
+.evo-timeline-card--final .evo-growth-label {
+  color: var(--navy);
 }
+
 
 /* ═══════════════════════════════════════════════
    SITE-WIDE GRID UTILITIES
@@ -670,320 +524,6 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 767px) {
   .site-grid-2 { grid-template-columns: 1fr; }
-}
-
-/* ── Evolution: main 3-col layout (Identity | Viz | Reputation) ── */
-.evo-main-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.7fr 1fr;
-  gap: 1rem;
-  align-items: start;
-}
-
-@media (max-width: 991px) {
-  .evo-main-grid { grid-template-columns: 1fr; }
-}
-
-/* ── Evolution: 5 BCOM subsections (3 + 2 asymmetric) ── */
-.evo-subsections-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-
-.evo-subsections-grid > :nth-child(5) {
-  grid-column: 2 / 4;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  .evo-subsections-grid { grid-template-columns: 1fr 1fr; }
-  .evo-subsections-grid > :nth-child(5) { grid-column: 1 / 3; }
-}
-
-@media (max-width: 767px) {
-  .evo-subsections-grid { grid-template-columns: 1fr; }
-  .evo-subsections-grid > :nth-child(5) { grid-column: 1; }
-}
-
-/* ── Evolution: 3-col timeline ── */
-.evo-timeline-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-
-@media (max-width: 767px) {
-  .evo-timeline-grid { grid-template-columns: 1fr; }
-}
-
-/* ── Evolution: Subsection cards — uniform palette, no color coding ── */
-.evo-sub-card {
-  background: var(--light-gray);
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--steel);
-  border-radius: 5px;
-  padding: 1.2rem;
-  height: 100%;
-}
-
-/* Color variants resolved — all subsections share the same neutral style */
-.evo-sub-blue, .evo-sub-amber, .evo-sub-red, .evo-sub-green, .evo-sub-purple { }
-
-.evo-sub-title {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.9rem;
-  color: var(--navy);
-  margin-bottom: 0.5rem;
-  line-height: 1.25;
-}
-
-.evo-sub-body {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.9rem;
-  color: var(--text);
-  line-height: 1.7;
-  margin-bottom: 0.5rem;
-}
-
-.evo-sub-gap {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.875rem;
-  color: var(--text);
-  line-height: 1.6;
-  margin: 0;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.evo-sub-gap strong {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--navy);
-}
-
-/* ── Stat callouts (SPI values) ── */
-.evo-stat-pair {
-  display: flex;
-  gap: 0.75rem;
-  margin-block: 0.6rem;
-}
-
-.evo-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.35rem 0.5rem;
-  flex: 1;
-}
-
-.evo-stat-num {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--navy);
-  line-height: 1.1;
-}
-
-.evo-stat-lab {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-top: 2px;
-  text-align: center;
-}
-
-/* ── Charisma quotient display ── */
-.evo-charisma-stats {
-  display: flex;
-  gap: 1rem;
-  margin-block: 0.6rem;
-}
-
-.evo-charisma-stat { display: flex; flex-direction: column; flex: 1; }
-
-.evo-charisma-num {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--navy);
-}
-
-.evo-charisma-lab {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-top: 3px;
-}
-
-/* Charisma helpers — steel for positive signal, navy for notable gap */
-.evo-green { color: var(--steel); }
-.evo-amber { color: var(--navy); }
-
-/* ── Adjective chip variants — palette only ── */
-.evo-adj-green { background: var(--steel-light) !important; color: var(--steel) !important; border-color: rgba(91,127,166,0.4) !important; }
-.evo-adj-amber { background: var(--light-gray) !important; color: var(--navy) !important; border-color: var(--border) !important; }
-
-/* ── Gap bar — navy signals deficit vs. team avg ── */
-.evo-bar-fill.evo-bar-gap { background: var(--navy); }
-
-/* ── Reputation Inputs grid ── */
-.evo-rep-inputs-label {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--navy);
-  margin: 0.75rem 0 0.4rem;
-}
-
-.evo-rep-inputs-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-}
-
-.evo-rep-input {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 3px;
-  padding: 4px 7px;
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.65rem;
-}
-
-.evo-rep-input-name { color: var(--text); }
-.evo-rep-input-val  { font-weight: 700; letter-spacing: 0.03em; }
-
-.evo-rep-strong { background: var(--steel-light); border: 1px solid rgba(91,127,166,0.35); }
-.evo-rep-strong .evo-rep-input-val { color: var(--steel); }
-.evo-rep-gap    { background: var(--white); border: 1px solid var(--border); }
-.evo-rep-gap .evo-rep-input-val    { color: var(--navy); }
-
-/* ── Professor presentation arc ── */
-.evo-prof-arc {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-block: 0.6rem;
-  flex-wrap: nowrap;
-}
-
-.evo-prof-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-}
-
-.evo-prof-score {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--navy);
-  line-height: 1.1;
-}
-
-/* Meets — bold navy to distinguish from Low Meets */
-.evo-prof-meets .evo-prof-score { color: var(--navy); }
-
-.evo-prof-lbl {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.6rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text);
-  text-align: center;
-  margin-top: 2px;
-}
-
-.evo-prof-arrow {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  flex-shrink: 0;
-}
-
-/* ── Reputation Outcomes row ── */
-.evo-outcomes-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-block: 0.6rem;
-}
-
-.evo-outcome-chip {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 600;
-  border-radius: 3px;
-  padding: 3px 7px;
-  background: var(--steel-light);
-  color: var(--navy);
-  border: 1px solid rgba(91,127,166,0.35);
-}
-
-/* Color variants removed — uniform chip */
-.evo-outcome-green, .evo-outcome-amber { }
-
-/* ── Subsection divider (between required dimension blocks) ── */
-.evo-subsec-divider {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-family: 'League Spartan', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.evo-subsec-divider::before,
-.evo-subsec-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-/* ── Double-dot divider: required content above / extended analysis below ── */
-.evo-extra-divider { margin: 2.5rem 0 1.5rem; }
-
-.evo-extra-divider-line {
-  border: none;
-  border-top: 2px dotted var(--border);
-  margin: 0 0 4px;
-}
-
-.evo-extra-label {
-  font-family: 'League Spartan', sans-serif;
-  font-size: clamp(1.4rem, 3vw, 1.9rem);
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  color: var(--navy);
-  text-align: center;
-  margin: 0.5rem 0;
-}
-
-/* ── Mini body text in identity cards ── */
-.evo-mini-text {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.875rem;
-  color: var(--text);
-  line-height: 1.65;
-  margin: 0;
 }
 
 /* ── Company logos on contact page ── */
@@ -1686,15 +1226,6 @@ footer a:hover {
   .technical-header { flex-direction: column; gap: 1rem; text-align: center; }
 }
 
-/* ── Gap visualization inner grid ── */
-.evo-gap-inner-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-@media (max-width: 767px) {
-  .evo-gap-inner-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 991.98px) {
