@@ -511,6 +511,17 @@ img { display: block; max-width: 100%; }
   color: var(--navy);
 }
 
+.evo-timeline-note {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.65;
+  margin-top: 0.75rem;
+  border-left: 3px solid var(--border);
+  padding-left: 0.75rem;
+}
+
 
 /* ═══════════════════════════════════════════════
    SITE-WIDE GRID UTILITIES
