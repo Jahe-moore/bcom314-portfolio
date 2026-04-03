@@ -1,5 +1,12 @@
-Need to update Resume on index under hiring to my updated version
-Need to update Resume on portfolio.html to my updated version
-Need to update Resume on contact.html to my updated version
-
-Update all Resume Buttons to JakeMoore_Resume_April
+4/2/26 - Update
+- Project directory is now full of folders, 
+- Add another card for data challenge #6, similar format, brief summary, skills, tool, go into explaining why ?
+- Fix broken file paths from folders being added to the directory, 
+- Add bolded words in the introduction.
+- Include a visualization of Personal Perception
+- Include a visualization of Workplace Preferences
+- More than 1 paragraph per section.
+	- Add a lot more context to each section of the analysis using BCOM standards, pulling from BCOM200 course etc.
+	- Other websites had an emphasis on "Growth" section.
+- Portfolio samples, explain why I am showcasing them.
+- Include a lot more visualizations for every metric, download data from Radian.

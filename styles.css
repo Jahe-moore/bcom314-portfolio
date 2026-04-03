@@ -352,7 +352,7 @@ img { display: block; max-width: 100%; }
 
 .video-card-heading {
   font-family: 'League Spartan', sans-serif;
-  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-size: 1.2rem;
   color: var(--navy);
   margin: 0 0 0.75rem;
 }

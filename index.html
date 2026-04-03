@@ -26,9 +26,240 @@
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    /* ── Evolution paragraph spacing ────────────────────────── */
+    .evo-essay-body {
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Viz: CSS variables extension ──────────────────────── */
+    :root {
+      --white:  #FFFFFF;
+      --orange: #D4850A;
+    }
+
+    /* ── Tooltip ─────────────────────────────────────────────── */
+    #tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      padding: 0.55rem 0.85rem;
+      border-radius: 3px;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      z-index: 9999;
+      max-width: 260px;
+    }
+    #tooltip.visible { opacity: 1; }
+
+    /* ── Viz section card ────────────────────────────────────── */
+    .viz-section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem 2rem 1.75rem;
+      margin-bottom: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .viz-header h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Visual 1 — Identity Profile ────────────────────────── */
+    .adj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0 0;
+      margin-bottom: 1.5rem;
+    }
+    .adj-col { padding: 0.25rem 0; }
+    .adj-col:last-child { padding-left: 1.75rem; }
+    .adj-col-header {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .adj-col-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+    .adj-sep { background: var(--border); }
+    .adj-pills-wrap { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .apill {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 3px;
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s ease;
+    }
+    .apill.visible { opacity: 1; transform: translateY(0); }
+    .apill:hover { transform: translateY(-2px) !important; box-shadow: 0 5px 16px rgba(0,0,0,0.13); }
+    .apill-self     { font-size: 0.84rem; padding: 0.42rem 0.95rem; background: var(--navy);       color: var(--white); }
+    .apill-primary  { font-size: 0.84rem; padding: 0.42rem 0.95rem; background: var(--steel);      color: var(--white); }
+    .apill-secondary{ font-size: 0.79rem; padding: 0.38rem 0.85rem; background: var(--steel-light);color: var(--navy);  border: 1px solid var(--steel); }
+    .apill-group-label {
+      width: 100%;
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0.55rem 0 0.2rem;
+    }
+    .adj-strengths {
+      padding-top: 1.35rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .adj-strengths.visible { opacity: 1; transform: translateY(0); }
+    .adj-strengths-label {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+    }
+    .tag-cluster { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .strength-tag {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.36rem 0.88rem;
+      background: var(--steel-light);
+      color: var(--navy);
+      border: 1px solid var(--steel);
+      border-radius: 2px;
+    }
+
+    /* ── Visual 2 — Self vs Others ───────────────────────────── */
+    #chart-v2 svg { width: 100%; height: auto; display: block; }
+    .gap-panel {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .gap-panel.visible { opacity: 1; transform: translateY(0); }
+    .gp-col { padding: 1.1rem 1.3rem; border-radius: 3px; }
+    .gp-self   { background: rgba(27,42,74,0.05);   border-left:  3px solid var(--navy);  }
+    .gp-others { background: rgba(91,127,166,0.08); border-right: 3px solid var(--steel); }
+    .gp-header { font-family: 'League Spartan', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.15rem; }
+    .gp-self .gp-header   { color: var(--navy);  }
+    .gp-others .gp-header { color: var(--steel); }
+    .gp-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      padding: 0.22rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .gp-val { font-weight: 700; }
+    .gp-self .gp-val   { color: var(--navy);  }
+    .gp-others .gp-val { color: var(--steel); }
+    .gp-style { font-family: 'League Spartan', sans-serif; font-size: 0.95rem; font-weight: 700; margin-top: 0.6rem; }
+    .gp-self .gp-style   { color: var(--navy);  }
+    .gp-others .gp-style { color: var(--steel); }
+    .gp-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      gap: 0.1rem;
+    }
+    .gp-delta       { font-family: 'League Spartan', sans-serif; font-size: 1.55rem; font-weight: 700; color: var(--steel); text-align: center; line-height: 1; }
+    .gp-arrow-icon  { font-size: 1.5rem; color: var(--border); line-height: 1.2; }
+    .gp-delta-label {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* ── Visual 3 — Work Environment Preferences ─────────────── */
+    #chart-v3 svg { width: 100%; height: auto; display: block; }
+    .ann-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 1.75rem;
+      margin-top: 1.1rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+    .ann-item { display: flex; align-items: flex-start; gap: 0.45rem; font-size: 0.82rem; color: var(--text-muted); }
+    .ann-dot  { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 0.38rem; }
+
+    /* ── Axis definition note ─────────────────────────────────── */
+    .style-note {
+      margin-top: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: var(--light-gray);
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .sn-row { display: flex; align-items: baseline; gap: 0.85rem; }
+    .sn-term {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--navy);
+      white-space: nowrap;
+      min-width: 128px;
+    }
+    .sn-def     { font-family: 'Libre Baskerville', serif; font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+    .sn-divider { height: 1px; background: var(--border); margin: 0.1rem 0; }
+
+    /* ── Viz responsive ───────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .adj-grid { grid-template-columns: 1fr; }
+      .adj-sep  { display: none; }
+      .adj-col:last-child { padding-left: 0; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+      .gap-panel { grid-template-columns: 1fr; }
+      .gp-arrow  { flex-direction: row; padding: 1rem 0; }
+      .ann-grid  { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
+
+<div id="tooltip"></div>
 
   <!-- ── Navbar ── -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -66,7 +297,7 @@
           <p class="hero-eyebrow">Business Analytics &amp; MIS · University of Arizona</p>
           <h1 class="hero-name">Jake Moore</h1>
           <p class="hero-tagline">Turning complexity into clear decisions and measurable results.</p>
-          <p class="hero-body">Hi, I'm Jake Moore — a junior at the University of Arizona's Eller College of Management, double-majoring in Business Analytics and Management Information Systems. I'm drawn to the intersection of business and technology: where analytical thinking, systems design, and clear communication come together to solve real problems. As a Technical Consultant at University IT Services, I've built the ability to translate technical work into outcomes that stakeholders can act on. I'm pursuing roles at the intersection of business strategy and technology, with graduation in May 2027.</p>
+          <p class="hero-body">Hi, I'm Jake Moore — a junior at the University of Arizona's Eller College of Management, double-majoring in <strong>Business Analytics and Management Information Systems</strong>. I'm drawn to the intersection of business and technology: where <strong>analytical thinking, systems design, and clear communication</strong> come together to solve real problems. As a <strong>Technical Consultant at University IT Services</strong>, I've built the ability to <strong>translate technical work into outcomes that stakeholders can act on</strong>. I'm pursuing roles at the intersection of business strategy and technology, with graduation in May 2027.</p>
           <div class="hero-links">
             <a class="btn-hero-primary" href="https://www.linkedin.com/in/jake-moore74/" target="_blank" rel="noopener">LinkedIn</a>
             <a class="btn-hero-secondary" href="#video">Video</a>
@@ -79,7 +310,7 @@
           <div class="hero-resume-card">
             <p class="hero-resume-label">Hiring?</p>
             <h2 class="hero-resume-heading">Let's work together.</h2>
-            <p class="hero-resume-body">I am actively seeking Business Intelligence Engineer and Data Analyst roles — graduating May 2027. If you are building a team that runs on data, I would love to connect.</p>
+            <p class="hero-resume-body">I am actively seeking <strong>Business Intelligence Engineer</strong> and <strong>Data Analyst</strong> roles — graduating May 2027. If you are building a team that <strong>runs on data</strong>, I would love to connect.</p>
             <a class="btn-hero-primary" href="JakeMoore_Resume_April.pdf" target="_blank" rel="noopener" style="display:block; text-align:center;">Download Resume</a>
             <a class="btn-hero-secondary" href="https://www.linkedin.com/in/jake-moore74/" target="_blank" rel="noopener" style="display:block; margin-top: 0.2rem; text-align:center;">Connect on LinkedIn</a>
           </div>
@@ -118,7 +349,7 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
-            <p class="video-card-body">Applied logistic regression to over 1 million U.S. domestic flights from January–February 2024 to identify the strongest predictors of arrival delay. Built end-to-end in R — from data cleaning through model evaluation — and written for a non-technical professional audience.</p>
+            <p class="video-card-body">Applied <strong>logistic regression</strong> to over <strong>1 million U.S. domestic flights</strong> from January–February 2024 to identify the <strong>strongest predictors of arrival delay</strong>. Built <strong>end-to-end in R</strong> — from data cleaning through model evaluation — and written for a <strong>non-technical professional audience</strong>.</p>
           </div>
         </div>
 
@@ -134,89 +365,189 @@
 
       <h2 class="section-heading">Where My Reputation Aligns — and Where It Doesn't</h2>
 
-      <p class="evo-essay-lead">Across the semester, the strongest alignment between my identity and my reputation was around analytical thinking, discipline, and the quality of my work. The main gap was not whether I contributed, but how visible that contribution felt to others in collaborative settings. I was consistently present and prepared, but feedback showed that I did not always make my thinking visible in the moment. Over time, my presentation delivery improved, and the broader pattern became clearer: my professional persona is strongest when I pair strong execution with more visible communication. This section draws on five data domains — Core Values Exploration, Behavioral Communication Research, Team Culture Findings, Growth Mindset, and Identity-Brand-Reputation — to explain where that pattern came from and where it is going.</p>
-
-      <!-- How I Measured This -->
-      <h3 class="evo-subsection-heading">How I Measured This</h3>
-      <div class="evo-measure-grid">
-        <div class="evo-measure-item">
-          <strong>Self-Perception Inventory (SPI)</strong>
-          <p>My baseline self-assessment. It captures how I describe myself, how I tend to communicate, and what kind of work environment I prefer.</p>
+      <!-- Row 1: Intro + What Drives My Work (left) | Visual 2 (right)
+           Grouping both sections in the left column matches the tall visual's height. -->
+      <div class="row align-items-start g-4 mb-5">
+        <div class="col-lg-6">
+          <p class="evo-essay-body">The clearest pattern across the semester was not that I changed into a completely different professional. It was that I became more precise about understanding how I was already being experienced by other people. The strongest alignment between how I see myself and how others see me showed up around <strong>analytical thinking, discipline, and the quality of my work</strong>. I consistently approached work with structure, preparation, and a strong bias toward getting it right. That part of my professional identity was stable. It was visible in my own self-assessment, in outside feedback, and in how people described my contributions over time.</p>
+          <p class="evo-essay-body">The more useful insight was where the gap appeared. It was not a gap in effort or competence. It was a <strong>gap in visibility</strong>. I was often doing the work, thinking through the problem, and contributing to the outcome, but other people did not always see that thinking unfold in real time. In group settings, I was often more visible in the quality of the final product than in the moment-by-moment discussion that produced it. That distinction ended up mattering more than I expected, because it pushed me to think about professional credibility in a more complete way. Strong execution matters, but so does <strong>making sound judgment visible while collaboration is happening</strong>.</p>
+          <h3 class="evo-subsection-heading" style="margin-top: 2rem;">What Drives My Work</h3>
+          <p class="evo-essay-body">A lot of my professional behavior makes more sense when viewed through what I value most at work. I am naturally drawn to environments where expectations are clear, standards are high, and progress can be measured. <strong>I care about being effective, but I also care about being accurate.</strong> <strong>I do not like performing competence</strong>; I would rather build it and prove it through the quality of the work itself. That is part of why discipline and preparation have shown up so consistently across my results. They are not just habits I happen to have. They are part of the standard I hold for myself when I take on responsibility.</p>
+          <p class="evo-essay-body">That value system shapes the way I approach both academic and professional work. I tend to <strong>earn credibility through follow-through, organized thinking, and results that can stand up to scrutiny</strong>. I am less interested in vague participation and more interested in whether a contribution actually improves the outcome. That can be a strength because it keeps me grounded in substance rather than appearance. It also creates pressure to make sure my work is not only strong, but legible to other people. Over the semester, I became more aware that values like rigor, independence, and discipline do not only affect how I work alone. They also shape how I come across on a team.</p>
         </div>
-        <div class="evo-measure-item">
-          <strong>Professional Reputation Survey (PRS)</strong>
-          <p>Outside feedback from people who have worked with me academically or professionally. It shows how others actually experience my strengths and habits.</p>
-        </div>
-        <div class="evo-measure-item">
-          <strong>360&deg; Team Evaluations</strong>
-          <p>Peer feedback from my BCOM team about my collaboration, communication, and contribution patterns during the semester.</p>
-        </div>
-        <div class="evo-measure-item">
-          <strong>Instructor and Preceptor Feedback</strong>
-          <p>Feedback tied most directly to BCOM performance standards — especially presentation delivery, professionalism, and communication credibility.</p>
+        <div class="col-lg-6">
+          <section class="viz-section" id="viz2">
+            <div class="viz-header">
+              <h2>Self-Perception vs. Professional Reputation</h2>
+            </div>
+            <div id="chart-v2"></div>
+            <div class="gap-panel" id="gap-panel">
+              <div class="gp-col gp-self">
+                <div class="gp-header">Self-Perception</div>
+                <div class="gp-row"><span>Proactivity</span><span class="gp-val">0.0</span></div>
+                <div class="gp-row"><span>Reactivity</span><span class="gp-val">−9.0</span></div>
+                <div class="gp-style">Analytical / Driver</div>
+              </div>
+              <div class="gp-arrow">
+                <div class="gp-delta">Δ +3.80</div>
+                <div class="gp-arrow-icon">→</div>
+                <div class="gp-delta-label">on proactivity</div>
+              </div>
+              <div class="gp-col gp-others">
+                <div class="gp-header">Professional Reputation</div>
+                <div class="gp-row"><span>Proactivity</span><span class="gp-val">+3.80</span></div>
+                <div class="gp-row"><span>Reactivity</span><span class="gp-val">−6.20</span></div>
+                <div class="gp-style">Driver</div>
+              </div>
+            </div>
+            <div class="style-note">
+              <div class="sn-row">
+                <span class="sn-term">Proactivity</span>
+                <span class="sn-def">How likely a person is to prioritize asserting their thoughts, opinions, or needs in the work environment.</span>
+              </div>
+              <div class="sn-row">
+                <span class="sn-term">Reactivity</span>
+                <span class="sn-def">How likely a person is to prioritize emoting and interacting with others.</span>
+              </div>
+              <div class="sn-divider"></div>
+              <div class="sn-row">
+                <span class="sn-term">Analytical / Driver</span>
+                <span class="sn-def">Highly structured and task-oriented — combines decisive, goal-oriented action with a preference for data, detail, and accuracy. Works best with direct communication, data-backed options, and rigorous discussion.</span>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
-      <p class="evo-essay-body" style="margin-top:0.9rem;">Together, these tools gave me a way to compare how I see myself, how others experience me, and how those patterns changed over the course of the semester.</p>
 
-      <!-- Where My Reputation Aligns -->
-      <h3 class="evo-subsection-heading">Where My Reputation Aligns</h3>
-      <p class="evo-essay-body">My SPI described me as analytical, independent, and results-oriented — someone who builds credibility through task completion and measurable outcomes. My Core Values and Identity-Brand-Reputation data pointed in the same direction: analytical rigor, discipline, and strong execution were not just self-descriptions, but patterns that others consistently experienced in my work. PRS respondents rated my Competence, Conduct, and Core Values as clearly aligned with how I present myself, and instructor feedback confirmed that preparation and work quality were evident throughout the semester. The identity I hold internally is not out of step with how others experience my contributions.</p>
-
-      <!-- Where the Gap Appears -->
-      <h3 class="evo-subsection-heading">Where the Gap Appears</h3>
-      <p class="evo-essay-body">The gap appeared less in competence than in communication visibility. My Behavioral Communication and Team Culture data suggested I often contributed through preparation and final outputs, but not always through visible real-time discussion — peer feedback noted that my contributions were more evident in finished work than in live group exchange. The Charisma Diagnostic placed me in the Warmth Zone with a Confidence Quotient of &minus;2.27, noting that warmth without visible confidence can lead others to underestimate engagement. My SPI work environment preferences help explain that pattern: I tend to operate best in direct, structured environments, which supports strong independent execution but can make me slower to externalize unfinished thinking in group settings. In professional settings, strong execution alone is not always sufficient — credibility also forms through how consistently others can observe judgment in action.</p>
-
-      <!-- Change Over Time -->
-      <h3 class="evo-subsection-heading">Change Over Time</h3>
-      <p class="evo-essay-body">To chart my growth longitudinally over the semester, I focused on instructor-observed changes in delivery, credibility, and audience presence across the three formal presentations. Each round built on the last — moving from establishing baseline structure and professional presence, to stronger vocal and physical delivery, to earning a Meets evaluation in the final presentation with confirmed improvements in posture, eye contact, audience leadership, and overall credibility.</p>
-
-      <div class="evo-timeline-grid">
-
-        <div class="evo-timeline-card">
-          <span class="evo-timeline-stage">Stage 1</span>
-          <h4 class="evo-timeline-label">Presentation 1 — Foundation</h4>
-          <ul class="evo-timeline-strengths">
-            <li>Professional appearance and confident presence established</li>
-            <li>Clear structure and organized delivery</li>
-          </ul>
-          <div class="evo-timeline-growth">
-            <span class="evo-growth-label">Growth Area</span>
-            <span>Eye contact and vocal confidence — delivery was prepared but script-dependent</span>
-          </div>
+      <!-- Row 2: How I Work + What My Teammates (left) | Visual 3 (right)
+           Two text sections fill the left column to balance Visual 3's height. -->
+      <div class="row align-items-start g-4 mb-5">
+        <div class="col-lg-6">
+          <h3 class="evo-subsection-heading">How I Work, Think, and Communicate</h3>
+          <p class="evo-essay-body">One of the most useful frameworks in this project was the distinction between self-perception and reputation. The Self-Perception Inventory, or SPI, is the tool I used to describe my own work style, communication habits, and workplace preferences. The Professional Reputation Survey, or PRS, captures how other people actually experience those traits. Looking at both mattered because it created a more honest comparison: not just who I think I am, but how that identity lands with other people in practice. That comparison was especially helpful in communication, where <strong>intention and impact are not always the same thing</strong>.</p>
+          <p class="evo-essay-body">The communication framework itself also became more useful once I stopped treating it like class vocabulary and started treating it like a practical lens. In Radian's terms, proactivity measures how likely someone is to assert their thoughts, opinions, or needs in a work environment. Reactivity measures how likely someone is to prioritize emoting and interacting with others. My results point to a style that is more structured, measured, and task-oriented than expressive. In plain terms, I am <strong>more likely to speak when I believe I have something clear, accurate, and useful to add</strong>. That tendency supports quality and precision, but it can also make me look quieter than I actually am in faster group settings. My communication style is not passive. It is <strong>selective</strong>. The challenge is making sure that selectiveness does not get mistaken for disengagement.</p>
         </div>
-
-        <div class="evo-timeline-card">
-          <span class="evo-timeline-stage">Stage 2</span>
-          <h4 class="evo-timeline-label">Presentation 2 — Stronger Delivery</h4>
-          <ul class="evo-timeline-strengths">
-            <li>Improved posture and physical composure under pressure</li>
-            <li>More consistent eye contact and audience engagement</li>
-          </ul>
-          <div class="evo-timeline-growth">
-            <span class="evo-growth-label">Growth Area</span>
-            <span>Facial expression and gestures — delivery still held back by scripted patterns</span>
-          </div>
+        <div class="col-lg-6">
+          <section class="viz-section" id="viz3">
+            <div class="viz-header">
+              <h2>Work Environment Preferences</h2>
+            </div>
+            <div id="chart-v3"></div>
+            <div class="ann-grid">
+              <div class="ann-item">
+                <div class="ann-dot"></div>
+                <div><strong>Debate (3.33):</strong> I do my best in conversations where ideas are backed by evidence and thoughtful reasoning.</div>
+              </div>
+              <div class="ann-item">
+                <div class="ann-dot"></div>
+                <div><strong>Feedback (0.67):</strong> I value clear, direct feedback because it helps me improve quickly and work more effectively with others.</div>
+              </div>
+              <div class="ann-item">
+                <div class="ann-dot"></div>
+                <div><strong>Hierarchy (1.00):</strong> I work well in team environments where ideas can be shared openly and contribution matters more than title.</div>
+              </div>
+              <div class="ann-item">
+                <div class="ann-dot"></div>
+                <div><strong>Context (0.67):</strong> I communicate best when expectations are clear and messages are straightforward.</div>
+              </div>
+              <div class="ann-item">
+                <div class="ann-dot"></div>
+                <div><strong>Chronemics (1.00):</strong> I perform best with structure, clear timelines, and a shared understanding of priorities.</div>
+              </div>
+            </div>
+          </section>
         </div>
-
-        <div class="evo-timeline-card evo-timeline-card--final">
-          <span class="evo-timeline-stage">Stage 3</span>
-          <h4 class="evo-timeline-label">Presentation 3 — Stronger Professional Credibility</h4>
-          <ul class="evo-timeline-strengths">
-            <li>Audience leadership and vocal confidence noticeably stronger</li>
-            <li>Posture, eye contact, and overall presence confirmed as improved</li>
-          </ul>
-          <div class="evo-timeline-growth">
-            <span class="evo-growth-label">Continued Focus</span>
-            <span>Less scripted delivery — continuing to build comfort speaking from internalized content</span>
-          </div>
-        </div>
-
       </div>
-      <p class="evo-timeline-note">Because team outcomes can reflect group performance, this timeline emphasizes individual communication development as reflected in instructor and preceptor feedback.</p>
+      <h3 class="evo-subsection-heading">What My Teammates Actually Experienced</h3>
+      <p class="evo-essay-body">The team-based feedback helped clarify how these tendencies played out in a shared work environment. My contribution pattern was not random. I tended to be strong in preparation, dependable in follow-through, and most visible through the quality of completed work. In other words, I was often <strong>contributing through substance before I was contributing through presence</strong>. That is a useful distinction, because teams do not only respond to the final answer. They also respond to when people speak up, how they build on others' ideas, and whether their thought process is visible while decisions are being made.</p>
+      <p class="evo-essay-body">That does not mean my collaboration was weak. It means the strongest parts of my collaboration were not always the loudest parts. I brought structure, consistency, and seriousness to the team environment, but I was not always maximizing visible participation in live discussion. Over the semester, I became more aware that <strong>being prepared is only part of being effective on a team</strong>. A team also needs to be able to read where you are, understand how you are thinking, and see your judgment while the work is still taking shape. That was one of the most useful lessons in this project because it moved my idea of teamwork beyond reliability alone and toward <strong>visibility, timing, and shared understanding</strong>.</p>
 
-      <!-- Cultivating My Professional Persona -->
-      <h3 class="evo-subsection-heading">Cultivating My Professional Persona</h3>
-      <p class="evo-essay-body">Moving forward, my goal is not to change the core of my professional persona, but to express it more visibly. My Growth Mindset data mattered here because the most useful pattern was not just where gaps existed, but how feedback gave me a clearer method for improving them. I want to keep the strengths that already align with my reputation — analytical rigor, discipline, and strong execution — while making those strengths more consistently observable in collaborative settings. That means speaking earlier in meetings rather than waiting until my thinking is fully refined, making my thought process visible before work is polished, and continuing to strengthen concise, confident verbal delivery. In the analytics and information systems roles I am pursuing, technical skill matters, but so does communicative visibility. My next stage of professional growth is making those two dimensions reinforce each other more consistently.</p>
+      <!-- Row 3: Where Identity Matched (left) | Visual 1 (right) -->
+      <div class="row align-items-start g-4 mb-5">
+        <div class="col-lg-6">
+          <h3 class="evo-subsection-heading">Where Identity and Reputation Matched</h3>
+          <p class="evo-essay-body">The strongest evidence in this project was that the core of my professional identity is not out of sync with my reputation. When I described myself as <strong>analytical, independent, and results-oriented</strong>, that was not contradicted by outside feedback. It was reinforced by it. The same traits kept resurfacing: strong work quality, discipline, preparation, and credible execution. That consistency matters because it suggests I am not building a professional persona out of branding alone. <strong>The underlying pattern is real.</strong> People are not seeing a polished version of me that is disconnected from how I actually work. They are seeing the same core strengths I would claim for myself.</p>
+          <p class="evo-essay-body">That alignment gave me a more useful definition of credibility. <strong>Credibility is not only about seeming professional.</strong> It is about creating a match between what I claim, what I do, and what other people consistently experience. In that sense, this project was reassuring. It showed that the foundation is already there. I do not need to invent a new professional identity from scratch. I need to keep refining how clearly that identity comes through in collaborative and public-facing situations.</p>
+        </div>
+        <div class="col-lg-6">
+          <section class="viz-section" id="viz1">
+            <div class="viz-header">
+              <h2>Identity Profile</h2>
+            </div>
+            <div class="adj-grid">
+              <div class="adj-col">
+                <div class="adj-col-header">
+                  <span class="adj-col-dot" style="background:var(--navy)"></span>
+                  <span style="color:var(--navy)">How I See Myself</span>
+                </div>
+                <div class="adj-pills-wrap">
+                  <span class="apill apill-self" data-delay="0">Driven</span>
+                  <span class="apill apill-self" data-delay="90">Hard-Working</span>
+                  <span class="apill apill-self" data-delay="180">Problem-Solver</span>
+                  <span class="apill apill-self" data-delay="270">Growth-Oriented</span>
+                  <span class="apill apill-self" data-delay="360">Independent</span>
+                  <span class="apill apill-self" data-delay="450">Well-Informed</span>
+                  <span class="apill apill-self" data-delay="540">Good with Numbers</span>
+                </div>
+              </div>
+              <div class="adj-sep"></div>
+              <div class="adj-col">
+                <div class="adj-col-header">
+                  <span class="adj-col-dot" style="background:var(--steel)"></span>
+                  <span style="color:var(--steel)">How Others Describe Me</span>
+                </div>
+                <div class="adj-pills-wrap">
+                  <div class="apill-group-label" style="opacity:0;transition:opacity 0.4s ease 0.28s" id="others-primary-label">Most Selected</div>
+                  <span class="apill apill-primary" data-delay="320">Leaderlike</span>
+                  <span class="apill apill-primary" data-delay="400">Driven</span>
+                  <span class="apill apill-primary" data-delay="480">Hard-Working</span>
+                  <span class="apill apill-primary" data-delay="560">Perfectionistic</span>
+                  <span class="apill apill-primary" data-delay="640">Problem-Solver</span>
+                  <div class="apill-group-label" style="opacity:0;transition:opacity 0.4s ease 0.7s" id="others-secondary-label">Also Noted</div>
+                  <span class="apill apill-secondary" data-delay="800">Competitive</span>
+                  <span class="apill apill-secondary" data-delay="880">Growth-Oriented</span>
+                  <span class="apill apill-secondary" data-delay="960">Good with Numbers</span>
+                  <span class="apill apill-secondary" data-delay="1040">Independent</span>
+                  <span class="apill apill-secondary" data-delay="1120">Well-Informed</span>
+                </div>
+              </div>
+            </div>
+            <div class="adj-strengths" id="adj-strengths">
+              <div class="adj-strengths-label">What my network consistently notices</div>
+              <div class="tag-cluster">
+                <span class="strength-tag">Driven</span>
+                <span class="strength-tag">Strong Work Ethic</span>
+                <span class="strength-tag">High-Quality Work</span>
+                <span class="strength-tag">Preparation &amp; Discipline</span>
+                <span class="strength-tag">Attention to Detail</span>
+                <span class="strength-tag">Lead-by-Example</span>
+                <span class="strength-tag">Silent Leader</span>
+                <span class="strength-tag">Well Respected</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Where the Gap Actually Showed (full width) -->
+      <h3 class="evo-subsection-heading">Where the Gap Actually Showed</h3>
+      <p class="evo-essay-body">The most important gap did not appear in competence. It appeared in communication visibility. My work often spoke well for me, but my thinking did not always become visible early enough for other people to fully experience it in real time. That helps explain why my final outputs could leave a strong impression even when my live presence in discussion felt more reserved. I was not absent from the work. I was often still <strong>too dependent on having my thinking fully refined before making it external</strong>. In professional terms, that matters because people do not only build trust from finished results. They also build trust from watching judgment happen.</p>
+      <p class="evo-essay-body">This was the part of the project that felt the most actionable. It gave me a specific development target instead of a vague one. I do not need to become louder for the sake of being louder. <strong>I need to become more visible earlier.</strong> That means <strong>speaking before an idea is fully polished</strong>, showing more of my reasoning process while a team is still shaping a direction, and letting people see the quality of my judgment before the final deliverable arrives. That is a much more useful goal than simply trying to "participate more," because it is tied to how professional credibility actually forms.</p>
+
+      <!-- What Changed Over the Semester (full width) -->
+      <h3 class="evo-subsection-heading">What Changed Over the Semester</h3>
+      <p class="evo-essay-body">The strongest evidence of growth showed up in presentation delivery and audience presence across the semester. Early on, my delivery already reflected preparation, structure, and professionalism, but it still leaned too heavily on scripting. The content was there, but the communication of it was more controlled than natural. As the semester progressed, that began to shift. My posture improved, my eye contact became more consistent, and my <strong>delivery started to feel less like reading from a prepared structure and more like leading an audience through a line of reasoning</strong>. By the final presentation, the strongest improvements were not just technical. They were perceptual. I appeared more credible, more grounded, and more in command of the room.</p>
+      <p class="evo-essay-body">That kind of growth matters because it shows the <strong>gap was not fixed by changing my values or personality</strong>. It was reduced by strengthening delivery. I did not have to become someone who performs confidence in a way that feels artificial. I had to become better at expressing preparation, judgment, and clarity in a way that other people could immediately recognize. That is a more useful way to think about communication growth. It is not about becoming generic or polished for its own sake. It is about <strong>making strong thinking easier to see, trust, and follow</strong>.</p>
+
+      <!-- What I'm Still Building (full width) -->
+      <h3 class="evo-subsection-heading">What I'm Still Building</h3>
+      <p class="evo-essay-body">The growth mindset part of this project was not about saying I am "open to feedback" in a generic way. It was about identifying a specific pattern, understanding what causes it, and changing how I respond to it. The pattern was clear; I am strongest when work requires structure, rigor, and strong execution, but I can lose visibility when I wait too long to share my thinking in collaborative settings. Once I understood that, the development path became much more concrete. <strong>I need to practice earlier contribution, not just better final delivery.</strong> <strong>I need to show work in motion, not only work when it is finished.</strong></p>
+      <p class="evo-essay-body">That is the kind of growth I actually trust because it is <strong>behavioral, not cosmetic</strong>. It is not based on adopting a different personality. It is based on tightening the connection between how I think and how other people experience that thinking. Over time, that means getting more comfortable speaking from internalized understanding instead of polished scripting, entering conversations earlier instead of later, and using direct communication in a way that is visible without becoming forced. Growth, for me, is not about becoming less analytical. It is about making my analytical strengths easier for other people to access.</p>
+
+      <!-- How I'm Carrying This Forward (full width) -->
+      <h3 class="evo-subsection-heading">How I'm Carrying This Forward</h3>
+      <p class="evo-essay-body">The main thing I am carrying forward is a more complete understanding of professional presence. I used to think <strong>strong work would reliably speak for itself</strong>. Now I think that is only half true. Strong work matters, but in collaborative and professional settings, <strong>people also need to see how you think, how you make decisions, and how you communicate under pressure</strong>. That insight is especially relevant to the kind of roles I am pursuing in analytics, technical consulting, and information systems. Those fields reward precision and problem-solving, but they also depend on being able to explain logic, build trust, and make complex thinking legible to other people.</p>
+      <p class="evo-essay-body">Going forward, I want my professional persona to be known for more than work quality alone. I want it to communicate <strong>disciplined thinking, strong standards, and reliable execution</strong> in a way that is visible earlier and more consistently. That means being more deliberate about speaking up in meetings, making recommendations with clearer verbal framing, and showing my reasoning before a final answer is fully polished. The foundation is already there. What this semester gave me was a clearer strategy for expressing it. My next stage of growth is not becoming someone else. It is <strong>making my strongest qualities easier to see at the moment they matter most</strong>.</p>
 
     </div>
   </section>
@@ -234,6 +565,397 @@
     </div>
   </footer>
 
+  <script>
+/* ─── Palette ─────────────────────────────────────────────── */
+const C = {
+  navy:   '#1B2A4A',
+  steel:  '#5B7FA6',
+  steelL: '#DDE8F2',
+  lgray:  '#ECEEF1',
+  border: '#D4D8DF',
+  muted:  '#6B7280',
+  orange: '#D4850A',
+  white:  '#FFFFFF'
+};
+
+/* ─── Tooltip ─────────────────────────────────────────────── */
+const tip = d3.select('#tooltip');
+function showTip(html, e) { tip.html(html).classed('visible', true); moveTip(e); }
+function moveTip(e)       { tip.style('left',(e.clientX+14)+'px').style('top',(e.clientY-10)+'px'); }
+function hideTip()        { tip.classed('visible', false); }
+
+/* ─────────────────────────────────────────────────────────── */
+/* Quadrant chart builder — large default dimensions            */
+/* ─────────────────────────────────────────────────────────── */
+function buildQuadrant(id, opts = {}) {
+  const {
+    xDom     = [-9, 9],
+    yDom     = [9, -9],
+    xLabel   = 'COMPOSITE PROACTIVITY',
+    yLabel   = 'COMPOSITE REACTIVITY',
+    tickStep = 1,
+    ql = {
+      tl: { name: 'Amiable',    desc: 'Lower Proactivity\nHigher Reactivity' },
+      tr: { name: 'Expressive', desc: 'Higher Proactivity\nHigher Reactivity' },
+      bl: { name: 'Analytical', desc: 'Lower Proactivity\nLower Reactivity' },
+      br: { name: 'Driver',     desc: 'Higher Proactivity\nLower Reactivity' }
+    },
+    vW = 700, vH = 560,
+    mg = { t: 44, r: 38, b: 66, l: 66 }
+  } = opts;
+
+  const W = vW - mg.l - mg.r;   // 596
+  const H = vH - mg.t - mg.b;   // 450
+
+  const xMin = Math.min(...xDom), xMax = Math.max(...xDom);
+  const yMin = Math.min(...yDom), yMax = Math.max(...yDom);
+
+  const svg = d3.select('#' + id)
+    .append('svg')
+    .attr('viewBox', `0 0 ${vW} ${vH}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet');
+
+  const g = svg.append('g').attr('transform', `translate(${mg.l},${mg.t})`);
+
+  const xScale = d3.scaleLinear().domain(xDom).range([0, W]);
+  const yScale = d3.scaleLinear().domain(yDom).range([0, H]);
+
+  const cx0 = xScale(0), cy0 = yScale(0);
+
+  // Quadrant fills — subtle, palette-matched
+  [
+    { x: 0,   y: 0,   w: cx0,   h: cy0,   fill: 'rgba(221,232,242,0.28)' },
+    { x: cx0, y: 0,   w: W-cx0, h: cy0,   fill: 'rgba(91,127,166,0.11)'  },
+    { x: 0,   y: cy0, w: cx0,   h: H-cy0, fill: 'rgba(236,238,241,0.75)' },
+    { x: cx0, y: cy0, w: W-cx0, h: H-cy0, fill: 'rgba(27,42,74,0.08)'   }
+  ].forEach(f => g.append('rect').attr('x',f.x).attr('y',f.y).attr('width',f.w).attr('height',f.h).attr('fill',f.fill));
+
+  // Grid lines
+  const xTicks = d3.range(xMin, xMax + tickStep, tickStep);
+  const yTicks = d3.range(yMin, yMax + tickStep, tickStep);
+
+  g.selectAll('.xgl').data(xTicks).enter().append('line')
+    .attr('x1', d => xScale(d)).attr('x2', d => xScale(d))
+    .attr('y1', 0).attr('y2', H)
+    .attr('stroke', C.border).attr('stroke-width', 0.6).attr('stroke-dasharray', '3,3');
+
+  g.selectAll('.ygl').data(yTicks).enter().append('line')
+    .attr('x1', 0).attr('x2', W)
+    .attr('y1', d => yScale(d)).attr('y2', d => yScale(d))
+    .attr('stroke', C.border).attr('stroke-width', 0.6).attr('stroke-dasharray', '3,3');
+
+  // Center axes (solid, slightly thicker)
+  g.append('line').attr('x1',cx0).attr('x2',cx0).attr('y1',0).attr('y2',H)
+    .attr('stroke',C.border).attr('stroke-width',2);
+  g.append('line').attr('x1',0).attr('x2',W).attr('y1',cy0).attr('y2',cy0)
+    .attr('stroke',C.border).attr('stroke-width',2);
+
+  // Tick numbers — skip 0 to avoid clutter at center
+  g.selectAll('.xtl').data(xTicks.filter(d => d !== 0)).enter().append('text')
+    .attr('x', d => xScale(d)).attr('y', H + 19)
+    .attr('text-anchor','middle')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size', 12).attr('fill', C.muted)
+    .text(d => d);
+
+  g.selectAll('.ytl').data(yTicks.filter(d => d !== 0)).enter().append('text')
+    .attr('x', -10).attr('y', d => yScale(d) + 4.5)
+    .attr('text-anchor','end')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size', 12).attr('fill', C.muted)
+    .text(d => d);
+
+  // Axis labels
+  g.append('text').attr('x', W/2).attr('y', H + 50)
+    .attr('text-anchor','middle')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size', 12).attr('font-weight', 600)
+    .attr('fill', C.navy).attr('letter-spacing','0.07em').text(xLabel);
+
+  g.append('text').attr('transform', `translate(-46,${H/2}) rotate(-90)`)
+    .attr('text-anchor','middle')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size', 12).attr('font-weight', 600)
+    .attr('fill', C.navy).attr('letter-spacing','0.07em').text(yLabel);
+
+  // Quadrant corner labels
+  const pad = 12;
+  [
+    { x: pad,   y: pad + 16, anchor: 'start', q: ql.tl },
+    { x: W-pad, y: pad + 16, anchor: 'end',   q: ql.tr },
+    { x: pad,   y: H-pad-30, anchor: 'start', q: ql.bl },
+    { x: W-pad, y: H-pad-30, anchor: 'end',   q: ql.br }
+  ].forEach(cfg => {
+    const lg = g.append('g');
+    lg.append('text').attr('x',cfg.x).attr('y',cfg.y)
+      .attr('text-anchor',cfg.anchor)
+      .attr('font-family','League Spartan, sans-serif').attr('font-size',14).attr('font-weight',700)
+      .attr('fill', C.navy).text(cfg.q.name);
+    (cfg.q.desc || '').split('\n').filter(Boolean).forEach((ln, i) => {
+      lg.append('text').attr('x',cfg.x).attr('y',cfg.y + 17 + i * 15)
+        .attr('text-anchor',cfg.anchor)
+        .attr('font-family','League Spartan, sans-serif').attr('font-size',11)
+        .attr('fill', C.muted).text(ln);
+    });
+  });
+
+  return { svg, g, xScale, yScale, W, H };
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* VISUAL 2 — Self vs Others (expanded, full-width)             */
+/* ─────────────────────────────────────────────────────────── */
+function initViz2() {
+  const { svg, g, xScale, yScale, W, H } = buildQuadrant('chart-v2');
+
+  const sx = xScale(0.0),   sy = yScale(-9.0);
+  const ox = xScale(3.80),  oy = yScale(-6.20);
+
+  // Legend
+  const leg = svg.append('g').attr('transform', `translate(${66}, 18)`);
+  [
+    { col: C.navy,  lbl: 'Self-Perception', x: 0   },
+    { col: C.steel, lbl: 'Professional Reputation', x: 160 }
+  ].forEach(d => {
+    leg.append('circle').attr('cx',d.x+7).attr('cy',6).attr('r',7).attr('fill',d.col);
+    leg.append('text').attr('x',d.x+18).attr('y',10.5)
+      .attr('font-family','League Spartan, sans-serif').attr('font-size',12).attr('fill',C.muted)
+      .text(d.lbl);
+  });
+
+  // Dashed connector (starts collapsed at Self)
+  const connector = g.append('line')
+    .attr('x1',sx).attr('y1',sy).attr('x2',sx).attr('y2',sy)
+    .attr('stroke',C.muted).attr('stroke-width',2).attr('stroke-dasharray','7,4.5')
+    .attr('opacity',0.55);
+
+  // Δ midpoint annotation + white bg
+  const mpx = (sx+ox)/2 + 16, mpy = (sy+oy)/2 - 14;
+  const midBg = g.append('rect')
+    .attr('x',mpx-5).attr('y',mpy-14).attr('width',148).attr('height',20)
+    .attr('fill',C.white).attr('rx',2).attr('opacity',0);
+  const midNote = g.append('text')
+    .attr('x',mpx).attr('y',mpy)
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',11.5).attr('font-weight',600)
+    .attr('font-style','italic').attr('fill',C.muted).attr('opacity',0)
+    .text('Δ Proactivity: +3.80');
+
+  // Self ripple + dot
+  const selfRipple = g.append('circle')
+    .attr('cx',sx).attr('cy',sy).attr('r',12)
+    .attr('fill','none').attr('stroke',C.navy).attr('stroke-width',1.5).attr('opacity',0);
+
+  const selfDot = g.append('circle')
+    .attr('cx',sx).attr('cy',sy).attr('r',0)
+    .attr('fill',C.navy).attr('stroke',C.white).attr('stroke-width',3)
+    .style('cursor','pointer')
+    .on('mouseover', e => showTip('<strong>Self-Perception (SPI)</strong><br>Proactivity: 0.0 &nbsp;·&nbsp; Reactivity: −9.0<br>Style: Analytical / Driver', e))
+    .on('mousemove', moveTip).on('mouseout', hideTip);
+
+  const selfName = g.append('text')
+    .attr('x',sx-18).attr('y',sy-40)
+    .attr('text-anchor','end')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',13).attr('font-weight',700)
+    .attr('fill',C.navy).attr('opacity',0).text('Self-Perception');
+  const selfStat1 = g.append('text')
+    .attr('x',sx-18).attr('y',sy-24)
+    .attr('text-anchor','end')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',10).attr('fill',C.muted)
+    .attr('opacity',0).text('Proactivity: 0.0');
+  const selfStat2 = g.append('text')
+    .attr('x',sx-18).attr('y',sy-11)
+    .attr('text-anchor','end')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',10).attr('fill',C.muted)
+    .attr('opacity',0).text('Reactivity: −9.0');
+
+  // Others dot + labels
+  const othersDot = g.append('circle')
+    .attr('cx',ox).attr('cy',oy).attr('r',0)
+    .attr('fill',C.steel).attr('stroke',C.white).attr('stroke-width',3)
+    .style('cursor','pointer')
+    .on('mouseover', e => showTip('<strong>Professional Reputation (PRS avg)</strong><br>Proactivity: +3.80 &nbsp;·&nbsp; Reactivity: −6.20<br>Style: Driver', e))
+    .on('mousemove', moveTip).on('mouseout', hideTip);
+
+  const othersName = g.append('text')
+    .attr('x',ox+18).attr('y',oy-38)
+    .attr('text-anchor','start')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',13).attr('font-weight',700)
+    .attr('fill',C.steel).attr('opacity',0).text('Professional Reputation');
+  const othersStat1 = g.append('text')
+    .attr('x',ox+18).attr('y',oy-23)
+    .attr('text-anchor','start')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',10).attr('fill',C.muted)
+    .attr('opacity',0).text('Proactivity: +3.80');
+  const othersStat2 = g.append('text')
+    .attr('x',ox+18).attr('y',oy-10)
+    .attr('text-anchor','start')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',10).attr('fill',C.muted)
+    .attr('opacity',0).text('Reactivity: −6.20');
+
+  // Ripple helper
+  function runRipple(el, n) {
+    if (n <= 0) return;
+    el.attr('r',12).attr('opacity',0.5)
+      .transition().duration(1400).ease(d3.easeQuadOut)
+      .attr('r',30).attr('opacity',0)
+      .on('end', () => runRipple(el, n - 1));
+  }
+
+  window._anim2 = () => {
+    selfDot.transition().duration(550).attr('r', 12);
+    selfName.transition().delay(500).duration(400).attr('opacity',1);
+    selfStat1.transition().delay(600).duration(350).attr('opacity',1);
+    selfStat2.transition().delay(680).duration(350).attr('opacity',1);
+    setTimeout(() => runRipple(selfRipple, 3), 450);
+
+    othersDot.transition().delay(950).duration(550).attr('r', 12);
+    othersName.transition().delay(1400).duration(400).attr('opacity',1);
+    othersStat1.transition().delay(1500).duration(350).attr('opacity',1);
+    othersStat2.transition().delay(1580).duration(350).attr('opacity',1);
+
+    connector.transition().delay(1850).duration(750).ease(d3.easeLinear)
+      .attr('x2',ox).attr('y2',oy);
+
+    midBg.transition().delay(2650).duration(400).attr('opacity',1);
+    midNote.transition().delay(2650).duration(400).attr('opacity',1);
+    setTimeout(() => document.getElementById('gap-panel').classList.add('visible'), 2800);
+  };
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* VISUAL 3 — Work Environment Preferences                      */
+/* ─────────────────────────────────────────────────────────── */
+function initViz3() {
+  const data = [
+    { dim: 'Debate',          val: 3.33 },
+    { dim: 'Decision-Making', val: 2.67 },
+    { dim: 'Relationships',   val: 1.33 },
+    { dim: 'Hierarchy',       val: 1.00 },
+    { dim: 'Chronemics',      val: 1.00 },
+    { dim: 'Conflict',        val: 0.67 },
+    { dim: 'Context',         val: 0.67 },
+    { dim: 'Feedback',        val: 0.67 },
+  ];
+
+  const mg = { t: 22, r: 32, b: 60, l: 160 };
+  const vW = 700, vH = 460;
+  const W = vW - mg.l - mg.r;
+  const H = vH - mg.t - mg.b;
+
+  const svg = d3.select('#chart-v3').append('svg')
+    .attr('viewBox', `0 0 ${vW} ${vH}`)
+    .attr('preserveAspectRatio','xMidYMid meet');
+  const g = svg.append('g').attr('transform', `translate(${mg.l},${mg.t})`);
+
+  const xSc = d3.scaleLinear().domain([0,4]).range([0,W]);
+  const ySc = d3.scaleBand().domain(data.map(d=>d.dim)).range([0,H]).padding(0.28);
+
+  const bw = ySc.bandwidth();
+
+  // Band fills
+  const bands = [
+    { lo: 0,    hi: 1.33, fill: 'rgba(236,238,241,0.9)' },
+    { lo: 1.33, hi: 2.67, fill: 'rgba(221,232,242,0.5)' },
+    { lo: 2.67, hi: 4,    fill: 'rgba(91,127,166,0.12)' }
+  ];
+  bands.forEach(b => {
+    g.append('rect')
+      .attr('x',xSc(b.lo)).attr('y',0)
+      .attr('width',xSc(b.hi)-xSc(b.lo)).attr('height',H)
+      .attr('fill',b.fill);
+  });
+
+  // Vertical grid lines at integer values
+  [0,1,2,3,4].forEach(v => {
+    g.append('line').attr('x1',xSc(v)).attr('x2',xSc(v)).attr('y1',0).attr('y2',H)
+      .attr('stroke',C.border).attr('stroke-width',0.7).attr('stroke-dasharray','3,3');
+    g.append('text').attr('x',xSc(v)).attr('y',H+16).attr('text-anchor','middle')
+      .attr('font-family','League Spartan, sans-serif').attr('font-size',11).attr('fill',C.muted).text(v);
+  });
+
+  // X axis label
+  g.append('text').attr('x',W/2).attr('y',H+40).attr('text-anchor','middle')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',11).attr('font-weight',600)
+    .attr('fill',C.navy).attr('letter-spacing','0.07em').text('PREFERENCE SCORE (0–4)');
+
+  // Y axis dimension labels
+  g.selectAll('.ylab').data(data).enter().append('text')
+    .attr('x',-12).attr('y', d => ySc(d.dim) + bw/2 + 4.5)
+    .attr('text-anchor','end')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',12).attr('font-weight',600)
+    .attr('fill',C.navy).text(d => d.dim);
+
+  // Lollipop stems
+  const stems = g.selectAll('.stem').data(data).enter().append('line')
+    .attr('x1',xSc(0)).attr('x2',xSc(0))
+    .attr('y1', d => ySc(d.dim) + bw/2)
+    .attr('y2', d => ySc(d.dim) + bw/2)
+    .attr('stroke',C.border).attr('stroke-width',2);
+
+  // Dots — r=16 so value text fits inside
+  const dots = g.selectAll('.dot').data(data).enter().append('circle')
+    .attr('cx',xSc(0))
+    .attr('cy', d => ySc(d.dim) + bw/2)
+    .attr('r',16)
+    .attr('fill',C.orange).attr('stroke',C.white).attr('stroke-width',2.5)
+    .style('cursor','pointer')
+    .on('mouseover',(e,d)=> showTip(`<strong>${d.dim}</strong><br>Score: ${d.val} / 4.00`, e))
+    .on('mousemove', moveTip).on('mouseout', hideTip);
+
+  // Value labels inside dots
+  const vals = g.selectAll('.val').data(data).enter().append('text')
+    .attr('x',xSc(0)).attr('y', d => ySc(d.dim) + bw/2 + 4)
+    .attr('text-anchor','middle')
+    .attr('font-family','League Spartan, sans-serif').attr('font-size',10).attr('font-weight',700)
+    .attr('fill',C.white).attr('opacity',0).text(d => d.val.toFixed(2));
+
+  window._anim3 = () => {
+    stems.transition().delay((d,i) => i*80).duration(680).ease(d3.easeQuadOut)
+      .attr('x2', d => xSc(d.val));
+    dots.transition().delay((d,i) => i*80).duration(680).ease(d3.easeQuadOut)
+      .attr('cx', d => xSc(d.val));
+    vals.transition().delay((d,i) => i*80 + 480).duration(300)
+      .attr('x', d => xSc(d.val)).attr('opacity',1);
+  };
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* IntersectionObserver — trigger each animation once           */
+/* ─────────────────────────────────────────────────────────── */
+function setupObservers() {
+  const io = (id, fn) => {
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { fn(); obs.disconnect(); }
+    }, { threshold: 0.2 });
+    obs.observe(document.getElementById(id));
+  };
+
+  // Visual 1 — staggered pill reveals
+  io('viz1', () => {
+    document.querySelectorAll('.apill').forEach(pill => {
+      const delay = parseInt(pill.dataset.delay || '0');
+      setTimeout(() => pill.classList.add('visible'), delay);
+    });
+    setTimeout(() => {
+      const pl = document.getElementById('others-primary-label');
+      const sl = document.getElementById('others-secondary-label');
+      if (pl) pl.style.opacity = '1';
+      if (sl) sl.style.opacity = '1';
+    }, 0);
+    setTimeout(() => {
+      const el = document.getElementById('adj-strengths');
+      if (el) el.classList.add('visible');
+    }, 1400);
+  });
+
+  // Visual 2 — D3 sequence
+  io('viz2', () => window._anim2());
+
+  // Visual 3 — D3 lollipop animation
+  io('viz3', () => window._anim3());
+}
+
+/* ─── Init ────────────────────────────────────────────────── */
+initViz2();
+initViz3();
+setupObservers();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

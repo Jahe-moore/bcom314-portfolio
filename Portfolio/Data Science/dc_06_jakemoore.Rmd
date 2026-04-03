@@ -1,0 +1,156 @@
+---
+title: "ESOC 214 - Data Challenge 06"
+author: "Jake Moore"
+tags: [R, RStudio, HW6]
+output:
+  pdf_document:
+    toc: false
+    number_sections: false
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(usmap)
+```
+## Background and approach
+
+We are working with regional and state level milk production over time data. Population data is more recent than the milk production data, so we treat it as an indicator rather than an exact same-year match. The following process is straightforward for this brief case study:
+
+First, we will import our data and analyze the contents, structure, and integrity. Next, we will identify the timeline of our data, finding the minimum and maximum year to correctly identify a range of time. Following that we will identify the top state by milk production for the year of 2017. Then we will visualize milk production in pounds over time using a scatterplot, coloring in different regions. Next, we will visualize milk produced in pounds on a choropleth map for the year of 2017. Finally, we will compare population vs. milk production in pounds using usmap::statepop using Pearson correlation. We will then dynamically link our data to a scatterplot. 
+
+# Limitations:
+Our data has a few key limitations:
+- Our correlation value shows a moderate positive correlation (0.63). It is common practice for a moderate correlation to span from 0.4-0.6 and a strong correlation to span from 0.6-0.8. This results in our correlation value being on the very low end of that scale.
+- Milk production data is only recent to the year of 2017, while state population
+data returned values as recent as 2022. This could make it more difficult to confirm without a doubt that there is a positive correlation. 
+
+# Conclusion:
+After running our brief analysis, we were able to successfully confirm that there is a positive correlation between state population and milk production in pounds. However, considering our limitations and our rather weak correlation value, it is likely there isn't a very strong positive relationship present. Further analysis would need to be conducted with more recent data. 
+
+
+## Methods:
+# Part A - Milk Production
+```{r}
+# 1
+milk_production_data <- read.csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-01-29/state_milk_production.csv")
+# 2
+q1_year_min <- summarise(milk_production_data, 
+                         min(year)) %>% 
+  pull()
+q1_year_max <- summarise(milk_production_data, 
+                         max(year)) %>% 
+  pull()
+# 3
+q2_state_count <-  milk_production_data %>%
+  summarise(n_states = n_distinct(state)) %>%
+  pull()
+# 4 
+q2_has_50_states <- (q2_state_count == 50)
+# 5
+state_counts_table <- tibble(
+  metric = "unique_states_excluding_others",
+  value = q2_state_count
+)
+# 6
+q3_top_state_2017 <- milk_production_data %>%
+  filter(year == 2017) %>%
+  arrange(desc(milk_produced)) %>%
+  slice(1) %>%
+  pull(state)
+# 7
+p_milk_scatter <- ggplot(milk_production_data, aes(x = year, y = milk_produced, color = region)) +
+  geom_point() +
+  labs(
+    title = "Milk Production by US state over time",
+    x = "Year",
+    y = "Milk Produced (lb)",
+    color = "Region",
+    caption = "Data Source: State_milk_production.csv"
+  ) +
+  theme_minimal()
+# 8)
+milk_scatter_comment <- "The scatter plot visualization above covers milk
+production in pounds from 1970 to 2017, colored by region. It is useful to 
+visualize consistent regional differences and long-run trends."
+```
+```{r}
+# Outputs
+p_milk_scatter
+cat(milk_scatter_comment)
+```
+## Part B - US map for 2017
+```{r}
+# 1
+milk_2017 <- milk_production_data %>%
+  filter(year == 2017) %>%
+  select(state,milk_produced)
+# 2
+p_usmap_2017 <- plot_usmap(
+  data = milk_2017,
+  values = "milk_produced",
+  color = "black",
+  ) +
+  scale_fill_continuous(
+    name = "Milk (lb)", 
+    labels = scales::label_number()
+  ) +
+  labs(
+    title = "US Milk Production (2017)",
+    caption = "Data Source: State_milk_production.csv"
+  )
+# 3
+map_comment <- "The 2017 choropleth map above shows where total milk production
+in pounds concentrates across U.S. states. Due to the totals not being
+normalized by population,interpret this as volume, not per-capita production."
+```
+```{r}
+# Outputs
+p_usmap_2017
+cat(map_comment)
+```
+## Part C — Population vs milk
+```{r}
+# 1
+statepop_renamed <- usmap::statepop %>%
+  rename(state = full)
+# 2
+pop_recent_col <- grep("pop_", names(statepop_renamed), value = TRUE)
+# 3
+pop_recent_yr <- gsub("pop_", "", pop_recent_col)
+# 4
+milk_recent <- milk_production_data %>%
+  filter(year == q1_year_max) %>%
+  select(state, milk_produced)
+# 5
+milk_pop_recent <- left_join(milk_recent, statepop_renamed, by = "state")
+# 6
+r_pop_milk <- cor(
+  milk_pop_recent[[pop_recent_col]],
+  milk_pop_recent$milk_produced,
+  use = "complete.obs"
+)
+# 7
+p_pop_vs_milk <- ggplot(milk_pop_recent, aes(x = .data[[pop_recent_col]], y = milk_produced)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = paste0("Population vs. Milk Production (", q1_year_max, ")"),
+    subtitle = "Population and milk production are positively correlated (r = 0.63)",
+    x = paste0(" Population (", pop_recent_yr, ")"),
+    y = paste0("Milk Produced (", q1_year_max, ")"),
+    color = "Region",
+    caption = "Data Source: State_milk_production.csv & usmap::statepop"
+  ) +
+  theme_minimal()
+# 8
+pop_v_milk_comment <- "Population uses the most recent field pop_2022
+(year 2022), while milk is from 2017; treat population as an indicator, 
+not an exact match. Population and milk production are positively
+correlated (r = 0.63), suggesting larger states tend to produce more milk."
+```
+```{r}
+# Outputs
+p_pop_vs_milk
+cat(pop_v_milk_comment)
+```
+
